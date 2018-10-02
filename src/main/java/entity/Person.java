@@ -6,6 +6,7 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -111,6 +112,15 @@ public class Person implements Serializable {
     public List<Phone> getPhoneList() {
         return phoneList;
     }
+	
+	public List<String> getPhoneNumsString(){
+		List<String> phoneNums = new ArrayList<>();
+		for(Phone p : this.phoneList){
+			phoneNums.add(p.getNumber() + " " + p.getDescription());
+		}
+		return phoneNums;
+	}
+	
 
     public void setPhoneList(List<Phone> phoneList) {
         this.phoneList = phoneList;

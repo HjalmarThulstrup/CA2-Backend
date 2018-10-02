@@ -5,6 +5,11 @@
  */
 package interfaces;
 
+import DTO.PersonDTO;
+import entity.CityInfo;
+import entity.Hobby;
+import entity.Person;
+import entity.Phone;
 import java.util.List;
 
 /**
@@ -24,5 +29,5 @@ public interface PersonFacadeInterface {
     
     public List<PersonDTO> getPeopleByHobby(Hobby hobby);
     
-    public List<PersonDTO> getPeopleByCity(City city);
+    public List<PersonDTO> getPeopleByCity(CityInfo city);
 }

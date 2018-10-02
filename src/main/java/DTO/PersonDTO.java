@@ -5,7 +5,9 @@
  */
 package DTO;
 
+import entity.Hobby;
 import entity.Person;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,24 +15,26 @@ import java.util.List;
  * @author martin
  */
 public class PersonDTO {
+
 	private int id;
 	private String email;
 	private String firstName;
 	private String lastName;
-	private int phone;
-	private String phoneDesc;
+	private List<String> phoneNums;
 	private List<String> hobbies;
 	private String streetAndCity;
 
 	public PersonDTO(Person p) {
-		this.id = p.getId;
-		this.email = p.getEmail;
-		this.firstName = p.getFirstName;
-		this.lastName = p.getLastName;
-		this.phone = p.getPhone;
-		this.phoneDesc = p.getPhoneDesc;
-		this.hobbies = p.getHobbies;
-		this.streetAndCity = p.getStreetAndCity;
+		this.id = p.getId();
+		this.email = p.getEmail();
+		this.firstName = p.getFirstName();
+		this.lastName = p.getLastName();
+		this.phoneNums = p.getPhoneNumsString();
+		hobbies = new ArrayList<>();
+		for (Hobby h : p.getHobbyList()) {
+			hobbies.add(h.toString());
+		}
+		this.streetAndCity = p.getAddress().getStreet() + " " + p.getAddress().getCityInfo();
 	}
 
 	public int getId() {
@@ -65,20 +69,12 @@ public class PersonDTO {
 		this.lastName = lastName;
 	}
 
-	public int getPhone() {
-		return phone;
+	public List<String> getPhoneNums() {
+		return phoneNums;
 	}
 
-	public void setPhone(int phone) {
-		this.phone = phone;
-	}
-
-	public String getPhoneDesc() {
-		return phoneDesc;
-	}
-
-	public void setPhoneDesc(String phoneDesc) {
-		this.phoneDesc = phoneDesc;
+	public void setPhoneNums(List<String> phoneNums) {
+		this.phoneNums = phoneNums;
 	}
 
 	public List<String> getHobbies() {
@@ -96,8 +92,5 @@ public class PersonDTO {
 	public void setStreetAndCity(String streetAndCity) {
 		this.streetAndCity = streetAndCity;
 	}
-	
-	
-	
-	
+
 }

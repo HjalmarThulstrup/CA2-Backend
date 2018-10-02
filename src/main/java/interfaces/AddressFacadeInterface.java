@@ -5,6 +5,9 @@
  */
 package interfaces;
 
+import DTO.AddressDTO;
+import entity.Address;
+
 /**
  *
  * @author wicktus

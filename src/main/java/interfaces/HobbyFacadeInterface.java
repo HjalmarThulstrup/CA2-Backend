@@ -5,6 +5,9 @@
  */
 package interfaces;
 
+import DTO.HobbyDTO;
+import entity.Hobby;
+
 /**
  *
  * @author wicktus

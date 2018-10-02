@@ -7,6 +7,7 @@ package DTO;
 
 import entity.Person;
 import java.util.List;
+import entity.Hobby;
 
 /**
  *
@@ -20,11 +21,11 @@ public class HobbyDTO {
     public HobbyDTO() {
         
     }
-    public HobbyDTO(String name, String desc, List<Person> personList) {
-        this.name = name;
-        this.desc = desc;
+    public HobbyDTO(Hobby hobby) {
+        this.name = hobby.getName();
+        this.desc = hobby.getDescription();
         
-        for(Person p : personList) {
+        for(Person p : hobby.getPersonList()) {
             this.personList.add(p.toString());
         }
     }

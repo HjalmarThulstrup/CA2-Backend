@@ -31,7 +31,8 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Hobby.findAll", query = "SELECT h FROM Hobby h")
     , @NamedQuery(name = "Hobby.findById", query = "SELECT h FROM Hobby h WHERE h.id = :id")
     , @NamedQuery(name = "Hobby.findByName", query = "SELECT h FROM Hobby h WHERE h.name = :name")
-    , @NamedQuery(name = "Hobby.findByDescription", query = "SELECT h FROM Hobby h WHERE h.description = :description")})
+    , @NamedQuery(name = "Hobby.findByDescription", query = "SELECT h FROM Hobby h WHERE h.description = :description")
+    , @NamedQuery(name = "Hobby.getHobbyPopulation", query = "SELECT COUNT(list.id) FROM Hobby h INNER JOIN h.personList list WHERE h.id = :id")})
 public class Hobby implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -47,8 +48,8 @@ public class Hobby implements Serializable {
     @Column(name = "description")
     private String description;
     @JoinTable(name = "PersonHobby", joinColumns = {
-        @JoinColumn(name = "hobbyId", referencedColumnName = "id")}, inverseJoinColumns = {
-        @JoinColumn(name = "personId", referencedColumnName = "id")})
+    @JoinColumn(name = "hobbyId", referencedColumnName = "id")}, inverseJoinColumns = {
+    @JoinColumn(name = "personId", referencedColumnName = "id")})
     @ManyToMany
     private List<Person> personList;
 

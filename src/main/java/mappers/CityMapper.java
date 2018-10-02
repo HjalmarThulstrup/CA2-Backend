@@ -5,10 +5,14 @@
  */
 package mappers;
 
+import DTO.CityInfoDTO;
+import interfaces.CityFacadeInterface;
+import java.util.List;
+
 /**
  *
  * @author martin
  */
 public class CityMapper {
-	
+
 }

@@ -19,7 +19,7 @@ public interface CityFacadeInterface {
 
 	public CityInfoDTO addCity(CityInfo city);
 
-	public boolean removeCity(String id);
+	public boolean removeCity(String zipCode);
 
 	public CityInfoDTO editCity(CityInfoDTO city);
 

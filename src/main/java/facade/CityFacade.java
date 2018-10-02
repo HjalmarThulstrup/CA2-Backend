@@ -34,8 +34,8 @@ public class CityFacade implements CityFacadeInterface {
 	}
 
 	@Override
-	public boolean removeCity(String id) {
-		return cityMapper.removeCity(id);
+	public boolean removeCity(String zipCode) {
+		return cityMapper.removeCity(zipCode);
 	}
 
 	@Override

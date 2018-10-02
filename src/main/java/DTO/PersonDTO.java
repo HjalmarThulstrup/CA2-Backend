@@ -5,6 +5,7 @@
  */
 package DTO;
 
+import entity.Person;
 import java.util.List;
 
 /**

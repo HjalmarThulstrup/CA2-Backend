@@ -34,8 +34,10 @@ import javax.validation.constraints.Size;
     , @NamedQuery(name = "Person.findById", query = "SELECT p FROM Person p WHERE p.id = :id")
     , @NamedQuery(name = "Person.findByEmail", query = "SELECT p FROM Person p WHERE p.email = :email")
     , @NamedQuery(name = "Person.findByFirstName", query = "SELECT p FROM Person p WHERE p.firstName = :firstName")
+    , @NamedQuery(name = "Person.findByPhone", query = "SELECT DISTINCT p FROM Person p INNER JOIN p.phoneList pl WHERE pl.number = :phoneNumber")
     , @NamedQuery(name = "Person.findByLastName", query = "SELECT p FROM Person p WHERE p.lastName = :lastName")})
-public class Person implements Serializable {
+public class Person implements Serializable
+{
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -61,78 +63,96 @@ public class Person implements Serializable {
     @ManyToOne(optional = false)
     private Address address;
 
-    public Person() {
+    public Person()
+    {
     }
 
-    public Person(Integer id) {
+    public Person(Integer id)
+    {
         this.id = id;
     }
 
-    public Integer getId() {
+    public Integer getId()
+    {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Integer id)
+    {
         this.id = id;
     }
 
-    public String getEmail() {
+    public String getEmail()
+    {
         return email;
     }
 
-    public void setEmail(String email) {
+    public void setEmail(String email)
+    {
         this.email = email;
     }
 
-    public String getFirstName() {
+    public String getFirstName()
+    {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
+    public void setFirstName(String firstName)
+    {
         this.firstName = firstName;
     }
 
-    public String getLastName() {
+    public String getLastName()
+    {
         return lastName;
     }
 
-    public void setLastName(String lastName) {
+    public void setLastName(String lastName)
+    {
         this.lastName = lastName;
     }
 
-    public List<Hobby> getHobbyList() {
+    public List<Hobby> getHobbyList()
+    {
         return hobbyList;
     }
 
-    public void setHobbyList(List<Hobby> hobbyList) {
+    public void setHobbyList(List<Hobby> hobbyList)
+    {
         this.hobbyList = hobbyList;
     }
 
-    public List<Phone> getPhoneList() {
+    public List<Phone> getPhoneList()
+    {
         return phoneList;
     }
 
-    public void setPhoneList(List<Phone> phoneList) {
+    public void setPhoneList(List<Phone> phoneList)
+    {
         this.phoneList = phoneList;
     }
 
-    public Address getAddress() {
+    public Address getAddress()
+    {
         return address;
     }
 
-    public void setAddress(Address address) {
+    public void setAddress(Address address)
+    {
         this.address = address;
     }
 
     @Override
-    public int hashCode() {
+    public int hashCode()
+    {
         int hash = 0;
         hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
+    public boolean equals(Object object)
+    {
         // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof Person)) {
             return false;
@@ -145,8 +165,9 @@ public class Person implements Serializable {
     }
 
     @Override
-    public String toString() {
+    public String toString()
+    {
         return "entity.Person[ id=" + id + " ]";
     }
-    
+
 }

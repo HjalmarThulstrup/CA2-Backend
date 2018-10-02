@@ -18,4 +18,6 @@ public interface HobbyFacadeInterface {
     public HobbyDTO editHobby(Hobby hobby);
 
     public int getHobbyPopularity(Hobby hobby);
+	
+	public HobbyDTO getHobby(int id);
 }

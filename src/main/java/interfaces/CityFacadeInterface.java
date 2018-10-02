@@ -18,4 +18,5 @@ public interface CityFacadeInterface {
     public CityDTO addCity(City city);
     public CityDTO removeCity(int id);
     public CityDTO editCity(City city);
+	public CityDTO getCity(int id);
 }

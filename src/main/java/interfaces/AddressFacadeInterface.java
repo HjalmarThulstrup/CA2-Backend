@@ -16,4 +16,6 @@ public interface AddressFacadeInterface {
     public AddressDTO deleteAddress(int id);
 
     public AddressDTO editAddress(Address addr);
+	
+	public AddressDTO getAddress(int id);
 }

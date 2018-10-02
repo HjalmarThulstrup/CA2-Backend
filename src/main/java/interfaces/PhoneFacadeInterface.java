@@ -16,5 +16,7 @@ public interface PhoneFacadeInterface {
     public PhoneDTO removeNumber(Phone phone);
 
     public PhoneDTO editNumber(Phone phone);
+	
+	public getPhoneDTO getPhone(int id);
 
 }

@@ -5,7 +5,7 @@
  */
 package interfaces;
 
-import entity.CityInfo;
+import DTO.CityInfoDTO;
 import java.util.List;
 
 /**
@@ -14,10 +14,13 @@ import java.util.List;
  */
 public interface CityFacadeInterface {
 
-    public List<CityDTO> getZipCodeList();
-    
-    public CityDTO addCity(CityInfo city);
-    public CityDTO removeCity(int id);
-    public CityDTO editCity(CityInfo city);
-	public CityDTO getCity(int id);
+	public List<CityInfoDTO> getZipCodeList();
+
+	public CityInfoDTO addCity(CityInfoDTO city);
+
+	public CityInfoDTO removeCity(int id);
+
+	public CityInfoDTO editCity(CityInfoDTO city);
+
+	public CityInfoDTO getCity(int id);
 }

@@ -6,38 +6,46 @@
 package facade;
 
 import DTO.CityInfoDTO;
+import entity.CityInfo;
 import interfaces.CityFacadeInterface;
 import java.util.List;
+import mappers.CityMapper;
 
 /**
  *
  * @author martin
  */
-public class CityFacade implements CityFacadeInterface{
+public class CityFacade implements CityFacadeInterface {
+
+	private CityMapper cityMapper;
+
+	public CityFacade(CityMapper cityMapper) {
+		this.cityMapper = cityMapper;
+	}
 
 	@Override
 	public List<CityInfoDTO> getZipCodeList() {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		return cityMapper.getZipCodeList();
 	}
 
 	@Override
-	public CityInfoDTO addCity(CityInfoDTO city) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	public CityInfoDTO addCity(CityInfo city) {
+		return cityMapper.addCity(city);
 	}
 
 	@Override
-	public CityInfoDTO removeCity(int id) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	public boolean removeCity(String id) {
+		return cityMapper.removeCity(id);
 	}
 
 	@Override
 	public CityInfoDTO editCity(CityInfoDTO city) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		return cityMapper.editCity(city);
 	}
 
 	@Override
-	public CityInfoDTO getCity(int id) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	public CityInfoDTO getCity(String zipCode) {
+		return cityMapper.getCity(zipCode);
 	}
-	
+
 }

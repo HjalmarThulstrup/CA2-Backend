@@ -6,6 +6,7 @@
 package interfaces;
 
 import DTO.CityInfoDTO;
+import entity.CityInfo;
 import java.util.List;
 
 /**
@@ -16,11 +17,11 @@ public interface CityFacadeInterface {
 
 	public List<CityInfoDTO> getZipCodeList();
 
-	public CityInfoDTO addCity(CityInfoDTO city);
+	public CityInfoDTO addCity(CityInfo city);
 
-	public CityInfoDTO removeCity(int id);
+	public boolean removeCity(String id);
 
 	public CityInfoDTO editCity(CityInfoDTO city);
 
-	public CityInfoDTO getCity(int id);
+	public CityInfoDTO getCity(String zipCode);
 }

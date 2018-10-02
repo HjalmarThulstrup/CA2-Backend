@@ -7,6 +7,7 @@ package DTO;
 
 import entity.Hobby;
 import entity.Person;
+import entity.Phone;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,10 +30,13 @@ public class PersonDTO {
 		this.email = p.getEmail();
 		this.firstName = p.getFirstName();
 		this.lastName = p.getLastName();
-		this.phoneNums = p.getPhoneNumsString();
-		hobbies = new ArrayList<>();
+		this.phoneNums = new ArrayList<>();
+		for (Phone phone : p.getPhoneList()) {
+			this.phoneNums.add(phone.getNumber() + " " + phone.getDescription());
+		}
+		this.hobbies = new ArrayList<>();
 		for (Hobby h : p.getHobbyList()) {
-			hobbies.add(h.toString());
+			this.hobbies.add(h.toString());
 		}
 		this.streetAndCity = p.getAddress().getStreet() + " " + p.getAddress().getCityInfo();
 	}

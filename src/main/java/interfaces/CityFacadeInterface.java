@@ -15,7 +15,7 @@ import java.util.List;
  */
 public interface CityFacadeInterface {
 
-	public List<CityInfoDTO> getZipCodeList();
+	public List<String> getZipCodeList();
 
 	public CityInfoDTO addCity(CityInfo city);
 

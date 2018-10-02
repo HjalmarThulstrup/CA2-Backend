@@ -7,6 +7,7 @@ package mappers;
 
 import DTO.CityInfoDTO;
 import entity.CityInfo;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -24,16 +25,19 @@ public class CityMapper {
 		this.emf = emf;
 	}
 
-	public List<CityInfoDTO> getZipCodeList() {
+	public List<String> getZipCodeList() {
 		EntityManager em = emf.createEntityManager();
-		List<CityInfoDTO> zipCodes = null;
+		List<String> zipCodes = new ArrayList<>();
 
 		try {
 			em.getTransaction().begin();
 			String qString = "SELECT NEW DTO.CityInfoDTO(c) From CityInfo AS c";
 
 			TypedQuery<CityInfoDTO> q = em.createQuery(qString, CityInfoDTO.class);
-			zipCodes = q.getResultList();
+			List<CityInfoDTO> cityInfoDTOs = q.getResultList();
+			for (CityInfoDTO c : cityInfoDTOs) {
+				zipCodes.add(c.getZipCode());
+			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		} finally {

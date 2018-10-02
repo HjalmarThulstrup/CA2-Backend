@@ -35,8 +35,9 @@ public class CityInfo implements Serializable {
     @Id
     @Basic(optional = false)
     @NotNull
+    @Size(min = 1, max = 10)
     @Column(name = "zipCode")
-    private Integer zipCode;
+    private String zipCode;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
@@ -48,20 +49,20 @@ public class CityInfo implements Serializable {
     public CityInfo() {
     }
 
-    public CityInfo(Integer zipCode) {
+    public CityInfo(String zipCode) {
         this.zipCode = zipCode;
     }
 
-    public CityInfo(Integer zipCode, String city) {
+    public CityInfo(String zipCode, String city) {
         this.zipCode = zipCode;
         this.city = city;
     }
 
-    public Integer getZipCode() {
+    public String getZipCode() {
         return zipCode;
     }
 
-    public void setZipCode(Integer zipCode) {
+    public void setZipCode(String zipCode) {
         this.zipCode = zipCode;
     }
 

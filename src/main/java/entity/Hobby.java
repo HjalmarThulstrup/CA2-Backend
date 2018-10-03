@@ -5,6 +5,7 @@
  */
 package entity;
 
+import DTO.HobbyDTO;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
@@ -56,6 +57,17 @@ public class Hobby implements Serializable {
     public Hobby() {
     }
 
+    public Hobby(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
+    
+    public Hobby(HobbyDTO hobbyDTO) {
+        this.name = hobbyDTO.getName();
+        this.description = hobbyDTO.getDesc();
+        this.id = hobbyDTO.getId();
+    }
+
     public Hobby(Integer id) {
         this.id = id;
     }
@@ -88,8 +100,8 @@ public class Hobby implements Serializable {
         return personList;
     }
 
-    public void setPersonList(List<Person> personList) {
-        this.personList = personList;
+    public void addPerson(Person p) {
+        this.personList.add(p);
     }
 
     @Override

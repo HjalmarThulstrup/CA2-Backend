@@ -14,7 +14,7 @@
       <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
       <property name="javax.persistence.jdbc.password" value="rasmusl2765"/>
       <property name="javax.persistence.schema-generation.database.action" value="create"/>
-      <property name="eclipselink.canonicalmodel.subpackage" value="prod" />
+      <property name="eclipselink.canonicalmodel.subpackage" value="prod"/>
     </properties>
   </persistence-unit>
   <persistence-unit name="jpaputest" transaction-type="RESOURCE_LOCAL">
@@ -30,8 +30,9 @@
       <property name="javax.persistence.jdbc.user" value="ralle"/>
       <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
       <property name="javax.persistence.jdbc.password" value="rasmusl2765"/>
-      <property name="javax.persistence.schema-generation.database.action" value="create"/>
-      <property name="eclipselink.canonicalmodel.subpackage" value="dev" />
+      <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
+      <property name="eclipselink.canonicalmodel.subpackage" value="dev"/>
+      <property name="javax.persistence.sql-load-script-source" value="scripts/hobbyTestFiller.sql"/>
     </properties>
   </persistence-unit>
 </persistence>

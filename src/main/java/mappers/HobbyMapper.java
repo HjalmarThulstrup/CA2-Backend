@@ -10,6 +10,7 @@ import DTO.HobbyDTO;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -93,36 +94,41 @@ public class HobbyMapper {
         return null;
     }
 
-    public int getHobbyPopularity(Hobby hobby) {
+    public int getHobbyPopularity(Integer id) {
         EntityManager em = getEntityManager();
         
         try {
             Query q = em.createNamedQuery("Hobby.getHobbyPopulation");
-            q.setParameter("id", hobby.getId());
+            q.setParameter("id", id);
             
             return q.getFirstResult();
             
         } catch(Exception e){
             //Skal nok kastes en custom exception her
+            e.printStackTrace();
         } finally {
             em.close();
         }
         return 0;
     }
 
-    public HobbyDTO getHobby(int id) {
+
+    public HobbyDTO getHobby(Integer id) {
         EntityManager em = getEntityManager();
-        
+        String qString = "SELECT NEW DTO.HobbyDTO(h) From Hobby AS h WHERE h.id = :id";
         try {
+            em.getTransaction().begin();
+            TypedQuery<HobbyDTO> q = em.createQuery(qString, HobbyDTO.class);
+            q.setParameter("id", id);
             
-            Hobby h = em.find(Hobby.class, id);
-            return new HobbyDTO(h);
-            
+            HobbyDTO hobby = q.getSingleResult();
+
+            return hobby;
         } catch (Exception e) {
-            //Custom Exception
-        } 
-        
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
         return null;
     }
-    
 }

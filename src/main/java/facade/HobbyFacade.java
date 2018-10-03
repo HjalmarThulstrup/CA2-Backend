@@ -31,8 +31,8 @@ public class HobbyFacade implements HobbyFacadeInterface{
     }
 
     @Override
-    public int getHobbyPopularity(Hobby hobby) {
-        return hm.getHobbyPopularity(hobby);
+    public int getHobbyPopularity(Integer id) {
+        return hm.getHobbyPopularity(id);
     }
 
     @Override

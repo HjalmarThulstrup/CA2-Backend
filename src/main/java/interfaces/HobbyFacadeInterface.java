@@ -20,7 +20,7 @@ public interface HobbyFacadeInterface {
 
     public HobbyDTO editHobby(Hobby hobby);
 
-    public int getHobbyPopularity(Hobby hobby);
+    public int getHobbyPopularity(Integer id);
 	
 	public HobbyDTO getHobby(int id);
 }

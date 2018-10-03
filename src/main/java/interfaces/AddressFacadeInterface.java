@@ -16,7 +16,7 @@ public interface AddressFacadeInterface {
 
     public AddressDTO createAddress(Address addr);
 
-    public AddressDTO deleteAddress(int id);
+    public boolean deleteAddress(int id);
 
     public AddressDTO editAddress(Address addr);
 	

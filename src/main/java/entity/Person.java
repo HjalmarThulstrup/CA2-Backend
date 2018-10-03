@@ -72,6 +72,16 @@ public class Person implements Serializable
         this.id = id;
     }
 
+    public Person(String email, String firstName, String lastName, List<Hobby> hobbyList, List<Phone> phoneList, Address address)
+    {
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.hobbyList = hobbyList;
+        this.phoneList = phoneList;
+        this.address = address;
+    }
+
     public Integer getId()
     {
         return id;

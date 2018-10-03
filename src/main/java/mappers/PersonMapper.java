@@ -5,7 +5,7 @@
  */
 package mappers;
 
-import DTO.PersonDTO;
+import DTO.CityInfoDTO;
 import entity.CityInfo;
 import entity.Hobby;
 import entity.Person;
@@ -22,25 +22,38 @@ import javax.persistence.TypedQuery;
 public class PersonMapper
 {
 
-    public static Person getByPhone(int phone)
+    private EntityManagerFactory emfactory;
+
+    public PersonMapper(String persistenceName)
     {
-        EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("jpapu");
+        this.emfactory = Persistence.createEntityManagerFactory(persistenceName);
+    }
+
+    public Person getById(int id)
+    {
+        EntityManager em = emfactory.createEntityManager();
+
+        Person person = em.find(Person.class, id);
+        em.close();
+
+        return person;
+    }
+
+    public Person getByPhone(int phone)
+    {
         EntityManager em = emfactory.createEntityManager();
 
         TypedQuery<Person> q = em.createNamedQuery("Person.findByPhone", Person.class);
         q.setParameter("phoneNumber", phone);
 
         Person pers = q.getResultList().get(0);
-
         em.close();
-        emfactory.close();
 
         return pers;
     }
 
-    public static void deletePersonById(int id)
+    public Person deletePersonById(int id)
     {
-        EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("jpapu");
         EntityManager em = emfactory.createEntityManager();
 
         Person person = em.find(Person.class, id);
@@ -50,56 +63,59 @@ public class PersonMapper
         em.getTransaction().commit();
 
         em.close();
-        emfactory.close();
-    }
-
-    public static Person editPerson(Person person)
-    {
-        EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("jpapu");
-        EntityManager em = emfactory.createEntityManager();
-
-        Person personFromDB = em.find(Person.class, person.getId());
-        em.getTransaction().begin();
-
-        personFromDB = person;
-        em.persist(personFromDB);
-
-        em.getTransaction().commit();
-
-        em.close();
-        emfactory.close();
 
         return person;
     }
 
-    public static List<Person> getPeopleByHobby(Hobby hobby)
+    public Person editPerson(Person person)
     {
-        EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("jpapu");
+        EntityManager em = emfactory.createEntityManager();
+
+        em.getTransaction().begin();
+        Person personFromDB = em.find(Person.class, person.getId());
+        personFromDB = person;
+        
+        em.merge(personFromDB);
+
+        em.getTransaction().commit();
+        em.close();
+
+        return person;
+    }
+
+    public List<Person> getPeopleByHobby(Hobby hobby)
+    {
         EntityManager em = emfactory.createEntityManager();
 
         List<Person> pList = em.createQuery("SELECT p FROM Person p INNER JOIN p.hobbyList h WHERE h.id = :hobbyId", Person.class).setParameter("hobbyId", hobby.getId()).getResultList();
 
         em.close();
-        emfactory.close();
-        
+
         return pList;
     }
 
-    public static List<Person> getPeopleByCity(CityInfo city)
+    public List<Person> getPeopleByCity(CityInfo city)
     {
-        EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("jpapu");
         EntityManager em = emfactory.createEntityManager();
 
         List<Person> pList = em.createQuery("SELECT p FROM Person p INNER JOIN p.address.cityInfo ci WHERE ci.zipCode = :zip", Person.class).setParameter("zip", city.getZipCode()).getResultList();
-
         em.close();
-        emfactory.close();
-        
-        return pList;    }
 
-    public static Person createPerson(Person person)
+        return pList;
+    }
+
+    public List<Person> getPeopleByCity(CityInfoDTO city)
     {
-        EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("jpapu");
+        EntityManager em = emfactory.createEntityManager();
+
+        List<Person> pList = em.createQuery("SELECT p FROM Person p INNER JOIN p.address.cityInfo ci WHERE ci.zipCode = :zip", Person.class).setParameter("zip", city.getZipCode()).getResultList();
+        em.close();
+
+        return pList;
+    }
+
+    public Person createPerson(Person person)
+    {
         EntityManager em = emfactory.createEntityManager();
 
         em.getTransaction().begin();
@@ -107,10 +123,8 @@ public class PersonMapper
         em.persist(person);
 
         em.getTransaction().commit();
-
         em.close();
-        emfactory.close();
 
-        return person;    
+        return person;
     }
 }

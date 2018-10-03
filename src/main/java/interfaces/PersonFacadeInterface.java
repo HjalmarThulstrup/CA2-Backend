@@ -21,7 +21,7 @@ public interface PersonFacadeInterface {
     //PersonDTO add/delete/edit/get
     public PersonDTO createPerson(Person person);
     
-    public void deletePerson(int id);
+    public PersonDTO deletePerson(int id);
     
     public PersonDTO editPerson(Person person);
     

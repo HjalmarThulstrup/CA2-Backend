@@ -6,11 +6,15 @@
 package mappers;
 
 import DTO.CityInfoDTO;
+import DTO.PersonDTO;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import entity.CityInfo;
 import entity.Hobby;
 import entity.Person;
 import exceptions.PersonNotFoundException;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -128,7 +132,7 @@ public class PersonMapper
         } finally {
             em.close();
         }
-        
+
         return pList;
     }
 
@@ -162,5 +166,21 @@ public class PersonMapper
             em.close();
         }
         return person;
+    }
+
+    public List<Person> getAllpeople() throws PersonNotFoundException
+    {
+        EntityManager em = emfactory.createEntityManager();
+
+        List<Person> pList;
+        try {
+            pList = em.createNamedQuery("Person.findAll", Person.class).getResultList();
+        } catch (Exception e) {
+            throw new PersonNotFoundException(e.getMessage());
+        } finally {
+            em.close();
+        }
+
+        return pList;
     }
 }

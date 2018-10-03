@@ -27,9 +27,9 @@ public class PersonFacade implements PersonFacadeInterface
 
     private final PersonMapper mapper;
 
-    public PersonFacade()
+    public PersonFacade(String persistenceName)
     {
-        this.mapper = new PersonMapper("jpapu");
+        this.mapper = new PersonMapper(persistenceName);
     }
 
     @Override
@@ -87,7 +87,30 @@ public class PersonFacade implements PersonFacadeInterface
         } catch (PersonNotFoundException ex) {
             Logger.getLogger(PersonFacade.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
+        return null;
+    }
+
+    @Override
+    public PersonDTO getPersonById(int id)
+    {
+        try {
+            return new PersonDTO(mapper.getById(id));
+        } catch (PersonNotFoundException ex) {
+            Logger.getLogger(PersonFacade.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return null;
+    }
+
+    public List<PersonDTO> getAllPeople()
+    {
+        try {
+            return mapper.getAllpeople().stream().map(p -> new PersonDTO(p)).collect(Collectors.toList());
+        } catch (PersonNotFoundException ex) {
+            Logger.getLogger(PersonFacade.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
         return null;
     }
 

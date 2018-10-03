@@ -10,6 +10,7 @@ import entity.CityInfo;
 import entity.Hobby;
 import entity.Person;
 import entity.Phone;
+import exceptions.PersonNotFoundException;
 import java.util.List;
 import javax.persistence.Persistence;
 import org.junit.Test;
@@ -31,9 +32,10 @@ public class PersonMapperTest
 
     /**
      * Test of getByPhone method, of class PersonMapper.
+     * @throws exceptions.PersonNotFoundException
      */
     @Test
-    public void testGetByPhone()
+    public void testGetByPhone() throws PersonNotFoundException
     {
         System.out.println("getByPhone");
 
@@ -48,9 +50,10 @@ public class PersonMapperTest
 
     /**
      * Test of deletePersonById method, of class PersonMapper.
+     * @throws exceptions.PersonNotFoundException
      */
     @Test
-    public void testDeletePersonById()
+    public void testDeletePersonById() throws PersonNotFoundException
     {
         System.out.println("deletePersonById");
         int id = 3;
@@ -64,9 +67,10 @@ public class PersonMapperTest
 
     /**
      * Test of editPerson method, of class PersonMapper.
+     * @throws exceptions.PersonNotFoundException
      */
     @Test
-    public void testEditPerson()
+    public void testEditPerson() throws PersonNotFoundException
     {
         System.out.println("editPerson");
 
@@ -84,9 +88,10 @@ public class PersonMapperTest
 
     /**
      * Test of getPeopleByHobby method, of class PersonMapper.
+     * @throws exceptions.PersonNotFoundException
      */
     @Test
-    public void testGetPeopleByHobby()
+    public void testGetPeopleByHobby() throws PersonNotFoundException
     {
         System.out.println("getPeopleByHobby");
 
@@ -101,9 +106,10 @@ public class PersonMapperTest
 
     /**
      * Test of getPeopleByCity method, of class PersonMapper.
+     * @throws exceptions.PersonNotFoundException
      */
     @Test
-    public void testGetPeopleByCity()
+    public void testGetPeopleByCity() throws PersonNotFoundException
     {
         System.out.println("getPeopleByCity");
         CityMapper cityMapper = new CityMapper(Persistence.createEntityManagerFactory("jpaputest"));

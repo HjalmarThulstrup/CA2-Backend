@@ -25,30 +25,14 @@ public class CityMapperTest {
 	public CityMapperTest() {
 	}
 
-	@BeforeClass
-	public static void setUpClass() {
-	}
-
-	@AfterClass
-	public static void tearDownClass() {
-	}
-
-	@Before
-	public void setUp() {
-	}
-
-	@After
-	public void tearDown() {
-	}
-
-	/**
-	 * Test of getZipCodeList method, of class CityMapper.
-	 */
 	@Test
 	public void testGetZipCodeList() {
 		System.out.println("getZipCodeList");
-		CityMapper cityMapper = new CityMapper(Persistence.createEntityManagerFactory("jpapu"));
-		int length = 1353;
+		CityMapper cityMapper = new CityMapper(Persistence.createEntityManagerFactory("jpaputest"));
+		int length = 12;
+		for(int i = 0; i < 10; i++){
+			cityMapper.addCity(new CityInfo("test" + i, "testby" + i));
+		}
 		List<CityInfoDTO> result = cityMapper.getZipCodeList();
 		assertEquals(length, result.size());
 	}
@@ -56,9 +40,10 @@ public class CityMapperTest {
 	@Test
 	public void testGetCityInfo() {
 		System.out.println("getCityInfo");
-		CityMapper cityMapper = new CityMapper(Persistence.createEntityManagerFactory("jpapu"));
+		CityMapper cityMapper = new CityMapper(Persistence.createEntityManagerFactory("jpaputest"));
 		String expectedZip = "4400";
 		String expectedName = "Kalundborg";
+		cityMapper.addCity(new CityInfo(expectedZip, expectedName));
 
 		CityInfoDTO cityInfoDTO = cityMapper.getCity(expectedZip);
 		assertEquals(expectedZip, cityInfoDTO.getZipCode());
@@ -68,7 +53,7 @@ public class CityMapperTest {
 	@Test
 	public void testAddCity() {
 		System.out.println("addCity");
-		CityMapper cityMapper = new CityMapper(Persistence.createEntityManagerFactory("jpapu"));
+		CityMapper cityMapper = new CityMapper(Persistence.createEntityManagerFactory("jpaputest"));
 		CityInfo city = new CityInfo();
 		city.setCity("test");
 		city.setZipCode("99999");
@@ -81,7 +66,7 @@ public class CityMapperTest {
 	@Test
 	public void testRemoveCity() {
 		System.out.println("RemoveCity");
-		CityMapper cityMapper = new CityMapper(Persistence.createEntityManagerFactory("jpapu"));
+		CityMapper cityMapper = new CityMapper(Persistence.createEntityManagerFactory("jpaputest"));
 		assertEquals("test", cityMapper.getCity("99999").getCity());
 		cityMapper.removeCity("99999");
 
@@ -91,12 +76,13 @@ public class CityMapperTest {
 	@Test
 	public void testEditCity() {
 		System.out.println("EditCity");
-		CityMapper cityMapper = new CityMapper(Persistence.createEntityManagerFactory("jpapu"));
-		CityInfoDTO cityInfoDTO = cityMapper.getCity("TEST");
+		CityMapper cityMapper = new CityMapper(Persistence.createEntityManagerFactory("jpaputest"));
+		cityMapper.addCity(new CityInfo("testEdit", "editby"));
+		CityInfoDTO cityInfoDTO = cityMapper.getCity("testEdit");
 		cityInfoDTO.setCity("TESTBY");
 		cityMapper.editCity(cityInfoDTO);
 
-		assertEquals("TESTBY", cityMapper.getCity("TEST").getCity());
+		assertEquals("TESTBY", cityMapper.getCity("testEdit").getCity());
 
 	}
 

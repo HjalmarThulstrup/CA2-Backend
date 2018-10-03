@@ -9,6 +9,7 @@ import DTO.CityInfoDTO;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import entity.CityInfo;
+import exceptions.CityNotFoundException;
 import facade.CityFacade;
 import javax.persistence.Persistence;
 import javax.ws.rs.core.Context;
@@ -32,30 +33,37 @@ import mappers.CityMapper;
  */
 @Path("CityInfo")
 public class CityInfoResource {
-	
+
 	Gson gson = new GsonBuilder().setPrettyPrinting().create();
 	CityMapper cityMapper = new CityMapper(Persistence.createEntityManagerFactory("jpapu"));
 	CityFacade cityFacade = new CityFacade(cityMapper);
 	@Context
 	private UriInfo context;
-	
+
 	public CityInfoResource() {
 	}
-	
+
 	@GET
 	@Path("/zipCodeList")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getCities() {
-		return Response.ok().entity(gson.toJson(cityFacade.getZipCodeList())).build();
+		return Response.ok()
+				.header("Access-Control-Allow-Origin", "*")
+				.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE")
+				.entity(gson.toJson(cityFacade.getZipCodeList())).build();
 	}
-	
+
 	@GET
 	@Path("/{zipCode}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getCity(@PathParam("zipCode") String zipCode) {
-		return Response.ok().entity(gson.toJson(cityFacade.getCity(zipCode))).build();
+	public Response getCity(@PathParam("zipCode") String zipCode) throws CityNotFoundException {
+		CityInfoDTO cityInfoDTO = cityFacade.getCity(zipCode);
+		if (cityInfoDTO == null) {
+			throw new CityNotFoundException("No city with zipcode: " + zipCode);
+		}
+		return Response.ok().entity(gson.toJson(cityInfoDTO)).build();
 	}
-	
+
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
@@ -65,7 +73,7 @@ public class CityInfoResource {
 		cityFacade.addCity(newCity);
 		return Response.ok().entity(gson.toJson(newCity)).build();
 	}
-	
+
 	@DELETE
 	@Path("/{zipCode}")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -73,19 +81,19 @@ public class CityInfoResource {
 		boolean bool = cityFacade.removeCity(zipCode);
 		return Response.ok().entity(gson.toJson(bool)).build();
 	}
-	
+
 	@PUT
 	@Path("/{zipCode}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response updateCity(String content, @PathParam("zipCode") String zipCode) throws Exception {
+	public Response updateCity(String content, @PathParam("zipCode") String zipCode) throws CityNotFoundException {
 		CityInfoDTO newCity = gson.fromJson(content, CityInfoDTO.class);
 		CityInfoDTO savedCity = cityFacade.getCity(zipCode);
 		if (savedCity == null) {
-			throw new Exception("no city with zipcode: " + zipCode);
+			throw new CityNotFoundException("No city with zipcode: " + zipCode);
 		}
 		cityFacade.editCity(newCity);
 		return Response.ok().entity(gson.toJson(cityFacade.getCity(zipCode))).build();
 	}
-	
+
 }

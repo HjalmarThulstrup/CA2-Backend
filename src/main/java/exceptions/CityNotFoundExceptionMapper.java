@@ -12,22 +12,23 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
+import javax.ws.rs.ext.Provider;
 
 /**
  *
  * @author martin
  */
+@Provider
 public class CityNotFoundExceptionMapper implements ExceptionMapper<CityNotFoundException> {
 
 	@Context
 	ServletContext context;
 	static Gson gson = new GsonBuilder().setPrettyPrinting().create();
-
+	
 	@Override
 	public Response toResponse(CityNotFoundException e) {
 		boolean isDebug = context.getInitParameter("debug").equals("true");
-		ExceptionDTO err = new ExceptionDTO(e, 404, isDebug);
-		err.setDescription("You tried to call...");
+		ExceptionDTO err = new ExceptionDTO(e, 404, isDebug);	
 
 		return Response.status(404)
 				.entity(gson.toJson(err))

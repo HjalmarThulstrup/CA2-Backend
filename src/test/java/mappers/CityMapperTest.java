@@ -49,7 +49,7 @@ public class CityMapperTest {
 		System.out.println("getZipCodeList");
 		CityMapper cityMapper = new CityMapper(Persistence.createEntityManagerFactory("jpapu"));
 		int length = 1353;
-		List<String> result = cityMapper.getZipCodeList();
+		List<CityInfoDTO> result = cityMapper.getZipCodeList();
 		assertEquals(length, result.size());
 	}
 

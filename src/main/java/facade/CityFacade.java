@@ -24,7 +24,7 @@ public class CityFacade implements CityFacadeInterface {
 	}
 
 	@Override
-	public List<String> getZipCodeList() {
+	public List<CityInfoDTO> getZipCodeList() {
 		return cityMapper.getZipCodeList();
 	}
 

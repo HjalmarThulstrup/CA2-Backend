@@ -25,24 +25,21 @@ public class CityMapper {
 		this.emf = emf;
 	}
 
-	public List<String> getZipCodeList() {
+	public List<CityInfoDTO> getZipCodeList() {
 		EntityManager em = emf.createEntityManager();
-		List<String> zipCodes = new ArrayList<>();
+		List<CityInfoDTO> cityInfoDTOs = null;
 
 		try {
 			em.getTransaction().begin();
 			String qString = "SELECT NEW DTO.CityInfoDTO(c) From CityInfo AS c";
 
 			TypedQuery<CityInfoDTO> q = em.createQuery(qString, CityInfoDTO.class);
-			List<CityInfoDTO> cityInfoDTOs = q.getResultList();
-			for (CityInfoDTO c : cityInfoDTOs) {
-				zipCodes.add(c.getZipCode());
-			}
+			cityInfoDTOs = q.getResultList();
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		} finally {
 			em.close();
-			return zipCodes;
+			return cityInfoDTOs;
 		}
 	}
 

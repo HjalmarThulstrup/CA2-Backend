@@ -9,14 +9,22 @@ package exceptions;
  *
  * @author martin
  */
-public class CityNotFoundException extends Exception {
+public class PersonNotFoundException extends Exception
+{
 
-	public CityNotFoundException() {
+    public PersonNotFoundException()
+    {
 
-	}
+    }
 
-	public CityNotFoundException(String msg) {
-		super(msg);
-	}
+    public PersonNotFoundException(String msg)
+    {
+        super(msg);
+    }
+
+    public PersonNotFoundException(Exception e)
+    {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
 }

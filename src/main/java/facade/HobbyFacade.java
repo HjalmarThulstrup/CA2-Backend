@@ -17,17 +17,17 @@ public class HobbyFacade implements HobbyFacadeInterface{
     
     @Override
     public HobbyDTO addHobby(Hobby hobby) {
-        return hm.addHobby(hobby);
+        return new HobbyDTO(hm.addHobby(hobby));
     }
 
     @Override
     public HobbyDTO deleteHobby(int id) {
-        return hm.deleteHobby(id);
+        return new HobbyDTO(hm.deleteHobby(id));
     }
 
     @Override
     public HobbyDTO editHobby(Hobby hobby) {
-        return hm.editHobby(hobby);
+        return new HobbyDTO(hm.editHobby(hobby));
     }
 
     @Override
@@ -37,7 +37,7 @@ public class HobbyFacade implements HobbyFacadeInterface{
 
     @Override
     public HobbyDTO getHobby(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return new HobbyDTO(hm.getHobby(id));
     }
     
 }

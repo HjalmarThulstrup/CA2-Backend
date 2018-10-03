@@ -9,10 +9,6 @@ import DTO.CityInfoDTO;
 import entity.CityInfo;
 import java.util.List;
 import javax.persistence.Persistence;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -29,7 +25,7 @@ public class CityMapperTest {
 	public void testGetZipCodeList() {
 		System.out.println("getZipCodeList");
 		CityMapper cityMapper = new CityMapper(Persistence.createEntityManagerFactory("jpaputest"));
-		int length = 12;
+		int length = 13;
 		for(int i = 0; i < 10; i++){
 			cityMapper.addCity(new CityInfo("test" + i, "testby" + i));
 		}

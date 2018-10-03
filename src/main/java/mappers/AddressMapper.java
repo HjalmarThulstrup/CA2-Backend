@@ -12,6 +12,7 @@ import entity.Address;
 import entity.CityInfo;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -81,11 +82,18 @@ public class AddressMapper {
 
     public AddressDTO getAddress(int id) {
         EntityManager em = getEntityManager();
+        String qString = "SELECT NEW DTO.AddressDTO(a) From Address AS a WHERE a.id = :id";
         try {
-            Address addr = em.find(Address.class, id);
-            return new AddressDTO(addr);
+            em.getTransaction().begin();
+            TypedQuery<AddressDTO> q = em.createQuery(qString, AddressDTO.class);
+            q.setParameter("id", id);
+            
+            AddressDTO addrDTO = q.getSingleResult();
+            return addrDTO;
         } catch (Exception e) {
             System.out.println(e.getMessage());
+        }finally{
+            em.close();
         }
         return null;
     }

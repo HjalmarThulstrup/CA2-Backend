@@ -9,14 +9,17 @@ package exceptions;
  *
  * @author martin
  */
-public class CityNotFoundException extends Exception {
+public class CityNotFoundException extends Exception
+{
 
-	public CityNotFoundException() {
+    public CityNotFoundException()
+    {
 
-	}
+    }
 
-	public CityNotFoundException(String msg) {
-		super(msg);
-	}
+    public CityNotFoundException(String msg)
+    {
+        super(msg);
+    }
 
 }

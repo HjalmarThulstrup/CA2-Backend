@@ -24,7 +24,7 @@ public class AddressFacade implements AddressFacadeInterface {
 
     @Override
     public AddressDTO createAddress(Address addr) {
-        return addressmapper.createAddress(addr);
+        return new AddressDTO(addressmapper.createAddress(addr));
     }
 
     @Override
@@ -34,12 +34,12 @@ public class AddressFacade implements AddressFacadeInterface {
 
     @Override
     public AddressDTO editAddress(Address addr) {
-        return addressmapper.editAddress(addr);
+        return new AddressDTO(addressmapper.editAddress(addr));
     }
 
     @Override
     public AddressDTO getAddress(int id) {
-        return addressmapper.getAddress(id);
+        return new AddressDTO(addressmapper.getAddress(id));
     }
 
 }

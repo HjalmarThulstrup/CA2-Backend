@@ -19,9 +19,9 @@ public interface CityFacadeInterface {
 
 	public CityInfoDTO addCity(CityInfo city);
 
-	public boolean removeCity(String zipCode);
+	public CityInfoDTO removeCity(String zipCode);
 
-	public CityInfoDTO editCity(CityInfoDTO city);
+	public CityInfoDTO editCity(CityInfo city);
 
 	public CityInfoDTO getCity(String zipCode);
 }

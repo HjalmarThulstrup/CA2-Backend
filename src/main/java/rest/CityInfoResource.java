@@ -78,8 +78,7 @@ public class CityInfoResource {
 	@Path("/{zipCode}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response deleteCity(@PathParam("zipCode") String zipCode) {
-		boolean bool = cityFacade.removeCity(zipCode);
-		return Response.ok().entity(gson.toJson(bool)).build();
+		return Response.ok().entity(gson.toJson(cityFacade.removeCity(zipCode))).build();
 	}
 
 	@PUT
@@ -87,7 +86,7 @@ public class CityInfoResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response updateCity(String content, @PathParam("zipCode") String zipCode) throws CityNotFoundException {
-		CityInfoDTO newCity = gson.fromJson(content, CityInfoDTO.class);
+		CityInfo newCity = gson.fromJson(content, CityInfo.class);
 		CityInfoDTO savedCity = cityFacade.getCity(zipCode);
 		if (savedCity == null) {
 			throw new CityNotFoundException("No city with zipcode: " + zipCode);

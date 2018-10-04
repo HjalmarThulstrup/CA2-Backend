@@ -21,7 +21,7 @@ public interface PersonFacadeInterface {
     //PersonDTO add/delete/edit/get
     public PersonDTO createPerson(Person person);
     
-    public void deletePerson(int id);
+    public PersonDTO deletePerson(int id);
     
     public PersonDTO editPerson(Person person);
     
@@ -30,4 +30,6 @@ public interface PersonFacadeInterface {
     public List<PersonDTO> getPeopleByHobby(Hobby hobby);
     
     public List<PersonDTO> getPeopleByCity(CityInfo city);
+    
+    public PersonDTO getPersonById(int id);
 }

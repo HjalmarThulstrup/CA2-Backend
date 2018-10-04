@@ -100,6 +100,10 @@ public class Hobby implements Serializable {
         return personList;
     }
 
+    public void setPersonList(List<Person> personList) {
+        this.personList = personList;
+    }
+    
     public void addPerson(Person p) {
         this.personList.add(p);
     }

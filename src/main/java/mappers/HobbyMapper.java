@@ -7,6 +7,8 @@ package mappers;
 
 import entity.Hobby;
 import DTO.HobbyDTO;
+import exceptions.HobbyNotFoundException;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
@@ -35,7 +37,7 @@ public class HobbyMapper
      * Adds a hobby to the database
      *
      * @param hobby
-     * @return
+     * @return HobbyDTO
      */
     public Hobby addHobby(Hobby hobby)
     {
@@ -132,5 +134,20 @@ public class HobbyMapper
             em.close();
         }
         return hobby;
+    }
+    
+    public List<Hobby> getHobby() throws HobbyNotFoundException {
+        EntityManager em = getEntityManager();
+        List<Hobby> hobbys;
+        try {
+            em.getTransaction().begin();
+            hobbys = em.createNamedQuery("Hobby.findAll", Hobby.class).getResultList();
+            return hobbys;
+        } catch (Exception e) {
+            
+        } finally {
+            em.close();
+        }
+        return null;
     }
 }

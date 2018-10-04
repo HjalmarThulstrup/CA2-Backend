@@ -26,7 +26,7 @@ public class CityMapperTest {
 	public void testGetZipCodeList() {
 		System.out.println("getZipCodeList");
 		CityFacade cityFacade = new CityFacade(new CityMapper(Persistence.createEntityManagerFactory("jpaputest")));
-		int length = 1;
+		int length = 2;
 		List<CityInfoDTO> result = cityFacade.getZipCodeList();
 		assertEquals(length, result.size());
 	}
@@ -69,14 +69,14 @@ public class CityMapperTest {
 
 	@Test
 	public void testEditCity() {
-//		System.out.println("EditCity");
-//		CityFacade cityFacade = new CityFacade(new CityMapper(Persistence.createEntityManagerFactory("jpaputest")));
-//		CityInfo cityInfo = cityFacade.addCity(new CityInfo("testEdit", "editby"));
-//		CityInfoDTO cityInfoDTO = cityFacade.getCity("testEdit");
-//		cityInfoDTO.setCity("TESTBY");
-//		cityFacade.editCity(cityInfoDTO);
-//
-//		assertEquals("TESTBY", cityMapper.getCity("testEdit").getCity());
+		System.out.println("EditCity");
+		CityFacade cityFacade = new CityFacade(new CityMapper(Persistence.createEntityManagerFactory("jpaputest")));
+		cityFacade.addCity(new CityInfo("zipEdit", "editCity"));
+		CityInfoDTO cityInfoDTO = cityFacade.getCity("zipEdit");
+		cityInfoDTO.setCity("TESTBY");
+		cityFacade.editCity(cityInfoDTO);
+
+		assertEquals("TESTBY", cityFacade.getCity("zipEdit").getCity());
 
 	}
 

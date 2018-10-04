@@ -40,7 +40,7 @@ public class CityFacade implements CityFacadeInterface {
 	}
 
 	@Override
-	public CityInfoDTO editCity(CityInfo city) {
+	public CityInfoDTO editCity(CityInfoDTO city) {
 		return new CityInfoDTO(cityMapper.editCity(city));
 	}
 

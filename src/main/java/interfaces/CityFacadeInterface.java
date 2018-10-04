@@ -21,7 +21,7 @@ public interface CityFacadeInterface {
 
 	public CityInfoDTO removeCity(String zipCode);
 
-	public CityInfoDTO editCity(CityInfo city);
+	public CityInfoDTO editCity(CityInfoDTO city);
 
 	public CityInfoDTO getCity(String zipCode);
 }

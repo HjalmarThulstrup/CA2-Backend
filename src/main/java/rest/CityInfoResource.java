@@ -86,7 +86,7 @@ public class CityInfoResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response updateCity(String content, @PathParam("zipCode") String zipCode) throws CityNotFoundException {
-		CityInfo newCity = gson.fromJson(content, CityInfo.class);
+		CityInfoDTO newCity = gson.fromJson(content, CityInfoDTO.class);
 		CityInfoDTO savedCity = cityFacade.getCity(zipCode);
 		if (savedCity == null) {
 			throw new CityNotFoundException("No city with zipcode: " + zipCode);

@@ -5,6 +5,7 @@
  */
 package mappers;
 
+import DTO.CityInfoDTO;
 import entity.CityInfo;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -82,13 +83,13 @@ public class CityMapper {
 		return cityInfo;
 	}
 
-	public CityInfo editCity(CityInfo city) {
+	public CityInfo editCity(CityInfoDTO city) {
 		EntityManager em = emf.createEntityManager();
 		CityInfo cityInfo = null;
 		try {
 			em.getTransaction().begin();
 			cityInfo = em.find(CityInfo.class, city.getZipCode());
-			cityInfo = city;
+			cityInfo.setCity(city.getCity());
 			em.merge(cityInfo);
 			em.getTransaction().commit();
 		} catch (Exception e) {

@@ -44,8 +44,8 @@ public class AddressMapperTest {
 
         AddressDTO result = new AddressDTO(addrMapper.createAddress(address));
 
-        assertEquals("Tester Road, test", result.getStreetAndInfo());
-        assertEquals("1000 Testby", result.getCityInfo());
+        assertEquals("Tester Road, test", result.getStreet() + ", " + result.getAddInfo());
+        assertEquals("1000 Testby", result.getZip() + " " + result.getCity());
     }
 
     /**
@@ -54,10 +54,10 @@ public class AddressMapperTest {
     @Test
     public void testGetAddress() {
         System.out.println("getAddress");
-        
-          assertEquals("Tester Road, test", new AddressDTO(addrMapper.getAddress(2)).getStreetAndInfo());
+        AddressDTO aDTO = new AddressDTO(addrMapper.getAddress(2));
+        assertEquals("Tester Road, test", aDTO.getStreet() + ", " + aDTO.getAddInfo());
     }
-    
+
     /**
      * Test of editAddress method, of class AddressMapper.
      */
@@ -72,12 +72,15 @@ public class AddressMapperTest {
 
         addrMapper.createAddress(address);
 
-        assertEquals("Tester Edit Road, test", new AddressDTO(addrMapper.getAddress(3)).getStreetAndInfo());
+        AddressDTO aDTO = new AddressDTO(addrMapper.getAddress(3));
+        assertEquals("Tester Edit Road, test", aDTO.getStreet() + ", " + aDTO.getAddInfo());
+        
         address.setStreet("Edited Road");
         addrMapper.editAddress(address);
-        assertEquals("Edited Road, test", new AddressDTO(addrMapper.getAddress(3)).getStreetAndInfo());
+        
+        aDTO = new AddressDTO(addrMapper.getAddress(3));
+        assertEquals("Edited Road, test", aDTO.getStreet() + ", " + aDTO.getAddInfo());
     }
-   
 
     /**
      * Test of deleteAddress method, of class AddressMapper.
@@ -87,7 +90,8 @@ public class AddressMapperTest {
         System.out.println("deleteAddress");
 
         int id = 2;
-        assertEquals("Tester Road, test", new AddressDTO(addrMapper.getAddress(id)).getStreetAndInfo());
+        AddressDTO aDTO = new AddressDTO(addrMapper.getAddress(id));
+        assertEquals("Tester Road, test", aDTO.getStreet() + ", " + aDTO.getAddInfo());
         addrMapper.deleteAddress(id);
         assertEquals(null, addrMapper.getAddress(id));
     }

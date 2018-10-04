@@ -28,8 +28,8 @@ public class AddressFacade implements AddressFacadeInterface {
     }
 
     @Override
-    public boolean deleteAddress(int id) {
-        return addressmapper.deleteAddress(id);
+    public AddressDTO deleteAddress(int id) {
+        return new AddressDTO(addressmapper.deleteAddress(id));
     }
 
     @Override

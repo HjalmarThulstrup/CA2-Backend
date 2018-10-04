@@ -13,12 +13,14 @@ import entity.Address;
 import entity.Hobby;
 import exceptions.AddressNotFoundException;
 import exceptions.AddressWrongFormatException;
+import exceptions.HobbyNotFoundException;
 import exceptions.HobbyWrongFormatException;
 import facade.AddressFacade;
 import javax.persistence.Persistence;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.Produces;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -63,10 +65,6 @@ public class AddressResource {
             .entity(gson.toJson(af.getAddress(0))).build();
     }
     
-    /**
-     * Retrieves representation of an instance of rest.AddressResource
-     * @return an instance of Response
-     */
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -99,13 +97,48 @@ public class AddressResource {
                 .entity(gson.toJson(createdAddress)).build();
     }
     
+    @DELETE
+    @Path("/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response deleteAddress(@PathParam("id") int id) throws AddressNotFoundException {
+        AddressDTO deletedAddress = af.deleteAddress(id);
+        if (deletedAddress == null) {
+            throw new AddressNotFoundException("Couldn't find an address with the id of: " + id);
+        }
+        
+        return Response.ok()
+                .header("Access-Control-Allow-Origin", "*")
+                .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE")
+                .entity(gson.toJson(deletedAddress)).build();
+    }
 
-    /**
-     * PUT method for updating or creating an instance of AddressResource
-     * @param content representation for the resource
-     */
     @PUT
+    @Path("/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public void putJson(String content) {
+    public Response putAddress(String content, @PathParam("id") int id) throws AddressNotFoundException {
+        Address newAddress = gson.fromJson(content, Address.class);
+        Address savedAddress = new Address(af.getAddress(id));
+        
+        if(savedAddress == null){
+            throw new AddressNotFoundException("No address with id: "+ id);
+        }
+        if (newAddress.getStreet()!= null) {
+            savedAddress.setStreet(newAddress.getStreet());
+        }
+        if (newAddress.getAdditionalInfo()!= null) {
+            savedAddress.setAdditionalInfo(newAddress.getAdditionalInfo());
+        }
+        if (newAddress.getCityInfo() != null) {
+            savedAddress.setCityInfo(newAddress.getCityInfo());
+        }
+        if (newAddress.getPersonList() != null) {
+            savedAddress.setPersonList(newAddress.getPersonList());
+        }
+        AddressDTO result = af.editAddress(savedAddress);
+        return Response.ok()
+                .header("Access-Control-Allow-Origin", "*")
+                .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE")
+                .entity(gson.toJson(result)).build();
     }
 }

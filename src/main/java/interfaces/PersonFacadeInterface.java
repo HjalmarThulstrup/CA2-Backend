@@ -30,4 +30,6 @@ public interface PersonFacadeInterface {
     public List<PersonDTO> getPeopleByHobby(Hobby hobby);
     
     public List<PersonDTO> getPeopleByCity(CityInfo city);
+    
+    public PersonDTO getPersonById(int id);
 }

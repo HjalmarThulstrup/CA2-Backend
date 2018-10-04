@@ -5,8 +5,10 @@
  */
 package entity;
 
+import DTO.PersonDTO;
 import java.io.Serializable;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -22,6 +24,8 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -36,6 +40,7 @@ import javax.validation.constraints.Size;
     , @NamedQuery(name = "Person.findByFirstName", query = "SELECT p FROM Person p WHERE p.firstName = :firstName")
     , @NamedQuery(name = "Person.findByPhone", query = "SELECT DISTINCT p FROM Person p INNER JOIN p.phoneList pl WHERE pl.number = :phoneNumber")
     , @NamedQuery(name = "Person.findByLastName", query = "SELECT p FROM Person p WHERE p.lastName = :lastName")})
+@XmlRootElement
 public class Person implements Serializable
 {
 
@@ -122,6 +127,7 @@ public class Person implements Serializable
         this.lastName = lastName;
     }
 
+    @XmlTransient
     public List<Hobby> getHobbyList()
     {
         return hobbyList;
@@ -132,6 +138,7 @@ public class Person implements Serializable
         this.hobbyList = hobbyList;
     }
 
+    @XmlTransient
     public List<Phone> getPhoneList()
     {
         return phoneList;

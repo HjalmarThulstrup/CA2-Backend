@@ -6,10 +6,10 @@
 package mappers;
 
 import DTO.CityInfoDTO;
-import entity.CityInfo;
 import entity.Hobby;
 import entity.Person;
 import entity.Phone;
+import exceptions.PersonNotFoundException;
 import facade.CityFacade;
 import java.util.List;
 import javax.persistence.Persistence;
@@ -20,107 +20,120 @@ import static org.junit.Assert.*;
  *
  * @author martin
  */
-public class PersonMapperTest {
 
-	private PersonMapper mapper;
+public class PersonMapperTest
+{
 
-	public PersonMapperTest() {
-		mapper = new PersonMapper("jpaputest");
-	}
+    private PersonMapper mapper;
 
-	/**
-	 * Test of getByPhone method, of class PersonMapper.
-	 */
-	@Test
-	public void testGetByPhone() {
-		System.out.println("getByPhone");
+    public PersonMapperTest()
+    {
+        mapper = new PersonMapper("jpaputest");
+    }
 
-		Person expResult = mapper.getById(1);
+    /**
+     * Test of getByPhone method, of class PersonMapper.
+     * @throws exceptions.PersonNotFoundException
+     */
+    @Test
+    public void testGetByPhone() throws PersonNotFoundException
+    {
+        System.out.println("getByPhone");
 
-		List<Phone> phone = expResult.getPhoneList();
+        Person expResult = mapper.getById(1);
 
-		Person result = mapper.getByPhone(phone.get(0).getNumber());
+        List<Phone> phone = expResult.getPhoneList();
 
-		assertEquals(expResult, result);
-	}
+        Person result = mapper.getByPhone(phone.get(0).getNumber());
 
-	/**
-	 * Test of deletePersonById method, of class PersonMapper.
-	 */
-	@Test
-	public void testDeletePersonById() {
-		System.out.println("deletePersonById");
-		int id = 3;
+        assertEquals(expResult, result);
+    }
 
-		Person expResult = mapper.getById(id);
-		Person pers = mapper.deletePersonById(id);
+    /**
+     * Test of deletePersonById method, of class PersonMapper.
+     * @throws exceptions.PersonNotFoundException
+     */
+    @Test
+    public void testDeletePersonById() throws PersonNotFoundException
+    {
+        System.out.println("deletePersonById");
+        int id = 3;
 
-		//Checks if the deleted person and the pulled person with matching ID is the same. This works because removing the person from the database returns it.
-		assertEquals(expResult, pers);
-	}
+        Person expResult = mapper.getById(id);
+        Person pers = mapper.deletePersonById(id);
 
-	/**
-	 * Test of editPerson method, of class PersonMapper.
-	 */
-	@Test
-	public void testEditPerson() {
-		System.out.println("editPerson");
+        //Checks if the deleted person and the pulled person with matching ID is the same. This works because removing the person from the database returns it.
+        assertEquals(expResult, pers);
+    }
 
-		String expResult = "Dinkos";
+    /**
+     * Test of editPerson method, of class PersonMapper.
+     * @throws exceptions.PersonNotFoundException
+     */
+    @Test
+    public void testEditPerson() throws PersonNotFoundException
+    {
+        System.out.println("editPerson");
 
-		Person person = mapper.getById(1);
-		person.setLastName(expResult);
+        String expResult = "Dinkos";
+        
+        Person person = mapper.getById(1);
+        person.setLastName(expResult);
+        
+        Person result = mapper.editPerson(person);
 
-		Person result = mapper.editPerson(person);
+        Person editedPerson = mapper.getById(1);
+        
+        assertEquals(expResult, editedPerson.getLastName());
+    }
 
-		Person editedPerson = mapper.getById(1);
+    /**
+     * Test of getPeopleByHobby method, of class PersonMapper.
+     * @throws exceptions.PersonNotFoundException
+     */
+    @Test
+    public void testGetPeopleByHobby() throws PersonNotFoundException
+    {
+        System.out.println("getPeopleByHobby");
 
-		assertEquals(expResult, editedPerson.getLastName());
-	}
+        Person expResult = mapper.getById(1);
+        Hobby hobby = expResult.getHobbyList().get(0);
 
-	/**
-	 * Test of getPeopleByHobby method, of class PersonMapper.
-	 */
-	@Test
-	public void testGetPeopleByHobby() {
-		System.out.println("getPeopleByHobby");
+        List<Person> result = mapper.getPeopleByHobby(hobby);
 
-		Person expResult = mapper.getById(1);
-		Hobby hobby = expResult.getHobbyList().get(0);
+        //Tests if the person used to get the hobby is in the result of people.
+        assertTrue(result.contains(expResult));
+    }
 
-		List<Person> result = mapper.getPeopleByHobby(hobby);
-
-		//Tests if the person used to get the hobby is in the result of people.
-		assertTrue(result.contains(expResult));
-	}
-
-	/**
-	 * Test of getPeopleByCity method, of class PersonMapper.
-	 */
-	@Test
-	public void testGetPeopleByCity() {
-		System.out.println("getPeopleByCity");
+    /**
+     * Test of getPeopleByCity method, of class PersonMapper.
+     * @throws exceptions.PersonNotFoundException
+     */
+    @Test
+    public void testGetPeopleByCity() throws PersonNotFoundException
+    {
+        System.out.println("getPeopleByCity");
 		CityFacade cityFacade = new CityFacade(new CityMapper(Persistence.createEntityManagerFactory("jpaputest")));
+        CityInfoDTO city = cityFacade.getCity("1000");
 
-		CityInfoDTO city = cityFacade.getCity("1000");
+        Person expResult = mapper.getById(1);
 
-		Person expResult = mapper.getById(1);
+        List<Person> result = mapper.getPeopleByCity(city);
+        assertTrue(result.contains(expResult));
+    }
 
-		List<Person> result = mapper.getPeopleByCity(city);
-		assertTrue(result.contains(expResult));
-	}
+    /**
+     * Test of createPerson method, of class PersonMapper.
+     */
+    @Test
+    public void testCreatePerson()
+    {
+        System.out.println("createPerson");
+        Person expResult = new Person("mailtest@testmail.dk", "Testo", "Von Test", null, null, null);
 
-	/**
-	 * Test of createPerson method, of class PersonMapper.
-	 */
-	@Test
-	public void testCreatePerson() {
-		System.out.println("createPerson");
-		Person expResult = new Person("mailtest@testmail.dk", "Testo", "Von Test", null, null, null);
+        Person result = mapper.createPerson(expResult);
 
-		Person result = mapper.createPerson(expResult);
-
-		assertEquals(expResult, result);
-	}
+        assertEquals(expResult, result);
+    }
 
 }

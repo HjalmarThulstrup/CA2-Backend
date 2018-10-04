@@ -10,8 +10,11 @@ import entity.CityInfo;
 import entity.Hobby;
 import entity.Person;
 import entity.Phone;
+import exceptions.PersonNotFoundException;
 import interfaces.PersonFacadeInterface;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import mappers.PersonMapper;
 
@@ -21,11 +24,12 @@ import mappers.PersonMapper;
  */
 public class PersonFacade implements PersonFacadeInterface
 {
+
     private final PersonMapper mapper;
 
-    public PersonFacade()
+    public PersonFacade(String persistenceName)
     {
-        this.mapper = new PersonMapper("jpapu");
+        this.mapper = new PersonMapper(persistenceName);
     }
 
     @Override
@@ -37,7 +41,13 @@ public class PersonFacade implements PersonFacadeInterface
     @Override
     public PersonDTO deletePerson(int id)
     {
-        return new PersonDTO(mapper.deletePersonById(id));
+        try {
+            return new PersonDTO(mapper.deletePersonById(id));
+        } catch (PersonNotFoundException ex) {
+            Logger.getLogger(PersonFacade.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return null;
     }
 
     @Override
@@ -49,19 +59,59 @@ public class PersonFacade implements PersonFacadeInterface
     @Override
     public PersonDTO getPerson(Phone phone)
     {
-        return new PersonDTO(mapper.getByPhone(phone.getNumber()));
+        try {
+            return new PersonDTO(mapper.getByPhone(phone.getNumber()));
+        } catch (PersonNotFoundException ex) {
+            Logger.getLogger(PersonFacade.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return null;
     }
 
     @Override
     public List<PersonDTO> getPeopleByHobby(Hobby hobby)
     {
-        return mapper.getPeopleByHobby(hobby).stream().map(p -> new PersonDTO(p)).collect(Collectors.toList());
+        try {
+            return mapper.getPeopleByHobby(hobby).stream().map(p -> new PersonDTO(p)).collect(Collectors.toList());
+        } catch (PersonNotFoundException ex) {
+            Logger.getLogger(PersonFacade.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 
     @Override
     public List<PersonDTO> getPeopleByCity(CityInfo city)
     {
-        return mapper.getPeopleByCity(city).stream().map(p -> new PersonDTO(p)).collect(Collectors.toList());
+        try {
+            return mapper.getPeopleByCity(city).stream().map(p -> new PersonDTO(p)).collect(Collectors.toList());
+        } catch (PersonNotFoundException ex) {
+            Logger.getLogger(PersonFacade.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return null;
+    }
+
+    @Override
+    public PersonDTO getPersonById(int id)
+    {
+        try {
+            return new PersonDTO(mapper.getById(id));
+        } catch (PersonNotFoundException ex) {
+            Logger.getLogger(PersonFacade.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return null;
+    }
+
+    public List<PersonDTO> getAllPeople()
+    {
+        try {
+            return mapper.getAllpeople().stream().map(p -> new PersonDTO(p)).collect(Collectors.toList());
+        } catch (PersonNotFoundException ex) {
+            Logger.getLogger(PersonFacade.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return null;
     }
 
 }

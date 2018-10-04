@@ -10,6 +10,7 @@ import entity.CityInfo;
 import entity.Hobby;
 import entity.Person;
 import entity.Phone;
+import facade.CityFacade;
 import java.util.List;
 import javax.persistence.Persistence;
 import org.junit.Test;
@@ -19,115 +20,107 @@ import static org.junit.Assert.*;
  *
  * @author martin
  */
-public class PersonMapperTest
-{
+public class PersonMapperTest {
 
-    private PersonMapper mapper;
+	private PersonMapper mapper;
 
-    public PersonMapperTest()
-    {
-        mapper = new PersonMapper("jpaputest");
-    }
+	public PersonMapperTest() {
+		mapper = new PersonMapper("jpaputest");
+	}
 
-    /**
-     * Test of getByPhone method, of class PersonMapper.
-     */
-    @Test
-    public void testGetByPhone()
-    {
-        System.out.println("getByPhone");
+	/**
+	 * Test of getByPhone method, of class PersonMapper.
+	 */
+	@Test
+	public void testGetByPhone() {
+		System.out.println("getByPhone");
 
-        Person expResult = mapper.getById(1);
+		Person expResult = mapper.getById(1);
 
-        List<Phone> phone = expResult.getPhoneList();
+		List<Phone> phone = expResult.getPhoneList();
 
-        Person result = mapper.getByPhone(phone.get(0).getNumber());
+		Person result = mapper.getByPhone(phone.get(0).getNumber());
 
-        assertEquals(expResult, result);
-    }
+		assertEquals(expResult, result);
+	}
 
-    /**
-     * Test of deletePersonById method, of class PersonMapper.
-     */
-    @Test
-    public void testDeletePersonById()
-    {
-        System.out.println("deletePersonById");
-        int id = 3;
+	/**
+	 * Test of deletePersonById method, of class PersonMapper.
+	 */
+	@Test
+	public void testDeletePersonById() {
+		System.out.println("deletePersonById");
+		int id = 3;
 
-        Person expResult = mapper.getById(id);
-        Person pers = mapper.deletePersonById(id);
+		Person expResult = mapper.getById(id);
+		Person pers = mapper.deletePersonById(id);
 
-        //Checks if the deleted person and the pulled person with matching ID is the same. This works because removing the person from the database returns it.
-        assertEquals(expResult, pers);
-    }
+		//Checks if the deleted person and the pulled person with matching ID is the same. This works because removing the person from the database returns it.
+		assertEquals(expResult, pers);
+	}
 
-    /**
-     * Test of editPerson method, of class PersonMapper.
-     */
-    @Test
-    public void testEditPerson()
-    {
-        System.out.println("editPerson");
+	/**
+	 * Test of editPerson method, of class PersonMapper.
+	 */
+	@Test
+	public void testEditPerson() {
+		System.out.println("editPerson");
 
-        String expResult = "Dinkos";
-        
-        Person person = mapper.getById(1);
-        person.setLastName(expResult);
-        
-        Person result = mapper.editPerson(person);
+		String expResult = "Dinkos";
 
-        Person editedPerson = mapper.getById(1);
-        
-        assertEquals(expResult, editedPerson.getLastName());
-    }
+		Person person = mapper.getById(1);
+		person.setLastName(expResult);
 
-    /**
-     * Test of getPeopleByHobby method, of class PersonMapper.
-     */
-    @Test
-    public void testGetPeopleByHobby()
-    {
-        System.out.println("getPeopleByHobby");
+		Person result = mapper.editPerson(person);
 
-        Person expResult = mapper.getById(1);
-        Hobby hobby = expResult.getHobbyList().get(0);
+		Person editedPerson = mapper.getById(1);
 
-        List<Person> result = mapper.getPeopleByHobby(hobby);
+		assertEquals(expResult, editedPerson.getLastName());
+	}
 
-        //Tests if the person used to get the hobby is in the result of people.
-        assertTrue(result.contains(expResult));
-    }
+	/**
+	 * Test of getPeopleByHobby method, of class PersonMapper.
+	 */
+	@Test
+	public void testGetPeopleByHobby() {
+		System.out.println("getPeopleByHobby");
 
-    /**
-     * Test of getPeopleByCity method, of class PersonMapper.
-     */
-    @Test
-    public void testGetPeopleByCity()
-    {
-        System.out.println("getPeopleByCity");
-        CityMapper cityMapper = new CityMapper(Persistence.createEntityManagerFactory("jpaputest"));
+		Person expResult = mapper.getById(1);
+		Hobby hobby = expResult.getHobbyList().get(0);
 
-        CityInfoDTO city = cityMapper.getCity("1000");
+		List<Person> result = mapper.getPeopleByHobby(hobby);
 
-        Person expResult = mapper.getById(1);
+		//Tests if the person used to get the hobby is in the result of people.
+		assertTrue(result.contains(expResult));
+	}
 
-        List<Person> result = mapper.getPeopleByCity(city);
-        assertTrue(result.contains(expResult));
-    }
+	/**
+	 * Test of getPeopleByCity method, of class PersonMapper.
+	 */
+	@Test
+	public void testGetPeopleByCity() {
+		System.out.println("getPeopleByCity");
+		CityFacade cityFacade = new CityFacade(new CityMapper(Persistence.createEntityManagerFactory("jpaputest")));
 
-    /**
-     * Test of createPerson method, of class PersonMapper.
-     */
-    @Test
-    public void testCreatePerson()
-    {
-        System.out.println("createPerson");
-        Person expResult = new Person("mailtest@testmail.dk", "Testo", "Von Test", null, null, null);
+		CityInfoDTO city = cityFacade.getCity("1000");
 
-        Person result = mapper.createPerson(expResult);
+		Person expResult = mapper.getById(1);
 
-        assertEquals(expResult, result);
-    }
+		List<Person> result = mapper.getPeopleByCity(city);
+		assertTrue(result.contains(expResult));
+	}
+
+	/**
+	 * Test of createPerson method, of class PersonMapper.
+	 */
+	@Test
+	public void testCreatePerson() {
+		System.out.println("createPerson");
+		Person expResult = new Person("mailtest@testmail.dk", "Testo", "Von Test", null, null, null);
+
+		Person result = mapper.createPerson(expResult);
+
+		assertEquals(expResult, result);
+	}
 
 }

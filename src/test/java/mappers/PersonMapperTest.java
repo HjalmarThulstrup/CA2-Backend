@@ -6,11 +6,11 @@
 package mappers;
 
 import DTO.CityInfoDTO;
-import entity.CityInfo;
 import entity.Hobby;
 import entity.Person;
 import entity.Phone;
 import exceptions.PersonNotFoundException;
+import facade.CityFacade;
 import java.util.List;
 import javax.persistence.Persistence;
 import org.junit.Test;
@@ -20,6 +20,7 @@ import static org.junit.Assert.*;
  *
  * @author martin
  */
+
 public class PersonMapperTest
 {
 
@@ -112,9 +113,8 @@ public class PersonMapperTest
     public void testGetPeopleByCity() throws PersonNotFoundException
     {
         System.out.println("getPeopleByCity");
-        CityMapper cityMapper = new CityMapper(Persistence.createEntityManagerFactory("jpaputest"));
-
-        CityInfoDTO city = cityMapper.getCity("1000");
+		CityFacade cityFacade = new CityFacade(new CityMapper(Persistence.createEntityManagerFactory("jpaputest")));
+        CityInfoDTO city = cityFacade.getCity("1000");
 
         Person expResult = mapper.getById(1);
 

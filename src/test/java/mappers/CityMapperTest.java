@@ -7,6 +7,7 @@ package mappers;
 
 import DTO.CityInfoDTO;
 import entity.CityInfo;
+import facade.CityFacade;
 import java.util.List;
 import javax.persistence.Persistence;
 import org.junit.Test;
@@ -24,24 +25,20 @@ public class CityMapperTest {
 	@Test
 	public void testGetZipCodeList() {
 		System.out.println("getZipCodeList");
-		CityMapper cityMapper = new CityMapper(Persistence.createEntityManagerFactory("jpaputest"));
-		int length = 13;
-		for(int i = 0; i < 10; i++){
-			cityMapper.addCity(new CityInfo("test" + i, "testby" + i));
-		}
-		List<CityInfoDTO> result = cityMapper.getZipCodeList();
+		CityFacade cityFacade = new CityFacade(new CityMapper(Persistence.createEntityManagerFactory("jpaputest")));
+		int length = 2;
+		List<CityInfoDTO> result = cityFacade.getZipCodeList();
 		assertEquals(length, result.size());
 	}
 
 	@Test
 	public void testGetCityInfo() {
 		System.out.println("getCityInfo");
-		CityMapper cityMapper = new CityMapper(Persistence.createEntityManagerFactory("jpaputest"));
-		String expectedZip = "4400";
-		String expectedName = "Kalundborg";
-		cityMapper.addCity(new CityInfo(expectedZip, expectedName));
+		CityFacade cityFacade = new CityFacade(new CityMapper(Persistence.createEntityManagerFactory("jpaputest")));
+		String expectedZip = "1000";
+		String expectedName = "Testby";
 
-		CityInfoDTO cityInfoDTO = cityMapper.getCity(expectedZip);
+		CityInfoDTO cityInfoDTO = cityFacade.getCity(expectedZip);
 		assertEquals(expectedZip, cityInfoDTO.getZipCode());
 		assertEquals(expectedName, cityInfoDTO.getCity());
 	}
@@ -49,36 +46,37 @@ public class CityMapperTest {
 	@Test
 	public void testAddCity() {
 		System.out.println("addCity");
-		CityMapper cityMapper = new CityMapper(Persistence.createEntityManagerFactory("jpaputest"));
-		CityInfo city = new CityInfo();
-		city.setCity("test");
-		city.setZipCode("99999");
+		CityFacade cityFacade = new CityFacade(new CityMapper(Persistence.createEntityManagerFactory("jpaputest")));
+		CityInfo city = new CityInfo("9999", "TESTTEST");
 
-		cityMapper.addCity(city);
+		cityFacade.addCity(city);
+		CityInfoDTO cityInfoDTO = new CityInfoDTO(city);
 
-		assertEquals("test", cityMapper.getCity("99999").getCity());
+		assertEquals(cityInfoDTO.getCity(), cityFacade.getCity("9999").getCity());
 	}
 
 	@Test
 	public void testRemoveCity() {
 		System.out.println("RemoveCity");
-		CityMapper cityMapper = new CityMapper(Persistence.createEntityManagerFactory("jpaputest"));
-		assertEquals("test", cityMapper.getCity("99999").getCity());
-		cityMapper.removeCity("99999");
-
-		assertEquals(null, cityMapper.getCity("99999"));
+		CityFacade cityFacade = new CityFacade(new CityMapper(Persistence.createEntityManagerFactory("jpaputest")));
+		
+		CityInfoDTO expected = cityFacade.getCity("9999");
+		CityInfoDTO result = cityFacade.removeCity("9999");
+		
+		assertEquals(expected.getCity(), result.getCity());
+		assertEquals(expected.getZipCode(), result.getZipCode());
 	}
 
 	@Test
 	public void testEditCity() {
 		System.out.println("EditCity");
-		CityMapper cityMapper = new CityMapper(Persistence.createEntityManagerFactory("jpaputest"));
-		cityMapper.addCity(new CityInfo("testEdit", "editby"));
-		CityInfoDTO cityInfoDTO = cityMapper.getCity("testEdit");
+		CityFacade cityFacade = new CityFacade(new CityMapper(Persistence.createEntityManagerFactory("jpaputest")));
+		cityFacade.addCity(new CityInfo("zipEdit", "editCity"));
+		CityInfoDTO cityInfoDTO = cityFacade.getCity("zipEdit");
 		cityInfoDTO.setCity("TESTBY");
-		cityMapper.editCity(cityInfoDTO);
+		cityFacade.editCity(cityInfoDTO);
 
-		assertEquals("TESTBY", cityMapper.getCity("testEdit").getCity());
+		assertEquals("TESTBY", cityFacade.getCity("zipEdit").getCity());
 
 	}
 

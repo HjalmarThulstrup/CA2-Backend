@@ -7,118 +7,97 @@ package mappers;
 
 import DTO.CityInfoDTO;
 import entity.CityInfo;
-import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.TypedQuery;
 
 /**
  *
  * @author martin
  */
-public class CityMapper
-{
+public class CityMapper {
 
-    private EntityManagerFactory emf;
+	private EntityManagerFactory emf;
 
-    public CityMapper(EntityManagerFactory emf)
-    {
-        this.emf = emf;
-    }
+	public CityMapper(EntityManagerFactory emf) {
+		this.emf = emf;
+	}
 
-    public List<CityInfoDTO> getZipCodeList()
-    {
-        EntityManager em = emf.createEntityManager();
-        List<CityInfoDTO> cityInfoDTOs = null;
+	public List<CityInfo> getZipCodeList() {
+		EntityManager em = emf.createEntityManager();
+		List<CityInfo> cityInfos = null;
 
-        try {
-            em.getTransaction().begin();
-            String qString = "SELECT NEW DTO.CityInfoDTO(c) From CityInfo AS c";
+		try {
+			em.getTransaction().begin();
+			String qString = "SELECT c FROM CityInfo c";
+			cityInfos = em.createNamedQuery("CityInfo.findAll").getResultList();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			em.close();
+		}
+		return cityInfos;
+	}
 
-            TypedQuery<CityInfoDTO> q = em.createQuery(qString, CityInfoDTO.class);
-            cityInfoDTOs = q.getResultList();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        } finally {
-            em.close();
-            return cityInfoDTOs;
-        }
-    }
+	public CityInfo addCity(CityInfo city) {
+		EntityManager em = emf.createEntityManager();
 
-    public CityInfoDTO addCity(CityInfo city)
-    {
-        EntityManager em = emf.createEntityManager();
-        CityInfoDTO cityInfoDTO = null;
+		try {
+			em.getTransaction().begin();
+			em.persist(city);
+			em.getTransaction().commit();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			em.close();
+		}
+		return city;
+	}
 
-        try {
-            em.getTransaction().begin();
-            em.persist(city);
-            em.getTransaction().commit();
-            cityInfoDTO = new CityInfoDTO(city);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        } finally {
-            em.close();
-            return cityInfoDTO;
-        }
-    }
+	public CityInfo getCity(String zipCode) {
+		EntityManager em = emf.createEntityManager();
+		CityInfo cityInfo = null;
+		try {
+			em.getTransaction().begin();
+			String qString = "SELECT c FROM CityInfo AS c WHERE c.zipCode = :zipCode";
+			cityInfo = em.createQuery(qString, CityInfo.class).setParameter("zipCode", zipCode).getSingleResult();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			em.close();
+		}
+		return cityInfo;
+	}
 
-    public CityInfoDTO getCity(String zipCode)
-    {
-        EntityManager em = emf.createEntityManager();
-        CityInfoDTO cityInfoDTO = null;
+	public CityInfo removeCity(String zipCode) {
+		EntityManager em = emf.createEntityManager();
+		CityInfo cityInfo = null;
 
-        try {
-            em.getTransaction().begin();
-            String qString = "SELECT NEW DTO.CityInfoDTO(c) From CityInfo AS c WHERE c.zipCode = :zipCode";
-            TypedQuery<CityInfoDTO> q = em.createQuery(qString, CityInfoDTO.class);
-            q.setParameter("zipCode", zipCode);
-            cityInfoDTO = q.getSingleResult();
+		cityInfo = em.find(CityInfo.class, zipCode);
+		em.getTransaction().begin();
+		em.remove(cityInfo);
+		em.getTransaction().commit();
 
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        } finally {
-            em.close();
-            return cityInfoDTO;
-        }
-    }
+		em.close();
 
-    public boolean removeCity(String id)
-    {
-        EntityManager em = emf.createEntityManager();
+		return cityInfo;
+	}
 
-        try {
-            CityInfo cityInfo = em.find(CityInfo.class, id);
-            em.getTransaction().begin();
-            em.remove(cityInfo);
-            em.getTransaction().commit();
-            return true;
-
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return false;
-        } finally {
-            em.close();
-        }
-    }
-
-    public CityInfoDTO editCity(CityInfoDTO city)
-    {
-        EntityManager em = emf.createEntityManager();
-        CityInfoDTO cityInfoDTO = null;
-        try {
-            CityInfo cityInfo = em.find(CityInfo.class, city.getZipCode());
-            em.getTransaction().begin();
-            cityInfo.setCity(city.getCity());
-            em.getTransaction().commit();
-            cityInfoDTO = new CityInfoDTO(cityInfo);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        } finally {
-            em.close();
-            return cityInfoDTO;
-        }
-    }
+	public CityInfo editCity(CityInfoDTO city) {
+		EntityManager em = emf.createEntityManager();
+		CityInfo cityInfo = null;
+		try {
+			em.getTransaction().begin();
+			cityInfo = em.find(CityInfo.class, city.getZipCode());
+			cityInfo.setCity(city.getCity());
+			em.merge(cityInfo);
+			em.getTransaction().commit();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			em.close();
+		}
+		return cityInfo;
+	}
 
 }

@@ -14,20 +14,16 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
-/**
- *
- * @author martin
- */
 @Provider
-public class CityNotFoundExceptionMapper implements ExceptionMapper<CityNotFoundException> {
+public class HobbyNotFoundExceptionMapper implements ExceptionMapper<HobbyNotFoundException> {
 
-	@Context
-	ServletContext context;
-	static Gson gson = new GsonBuilder().setPrettyPrinting().create();
-	
-	@Override
-	public Response toResponse(CityNotFoundException e) {
-		boolean isDebug = context.getInitParameter("debug").equals("true");
+    @Context
+    ServletContext context;
+    static Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        
+    @Override
+    public Response toResponse(HobbyNotFoundException e) {
+        boolean isDebug = context.getInitParameter("debug").equals("true");
 		ExceptionDTO err = new ExceptionDTO(e, 404, isDebug);	
 
 		return Response.status(404)
@@ -35,7 +31,6 @@ public class CityNotFoundExceptionMapper implements ExceptionMapper<CityNotFound
 				.entity(gson.toJson(err))
 				.type(MediaType.APPLICATION_JSON).
 				build();
-
-	}
-
+    }
+    
 }

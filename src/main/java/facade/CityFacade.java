@@ -9,6 +9,7 @@ import DTO.CityInfoDTO;
 import entity.CityInfo;
 import interfaces.CityFacadeInterface;
 import java.util.List;
+import java.util.stream.Collectors;
 import mappers.CityMapper;
 
 /**
@@ -25,27 +26,39 @@ public class CityFacade implements CityFacadeInterface {
 
 	@Override
 	public List<CityInfoDTO> getZipCodeList() {
-		return cityMapper.getZipCodeList();
+		return cityMapper.getZipCodeList().stream().map(z -> new CityInfoDTO(z)).collect(Collectors.toList());
 	}
 
 	@Override
 	public CityInfoDTO addCity(CityInfo city) {
-		return cityMapper.addCity(city);
+		return new CityInfoDTO(cityMapper.addCity(city));
 	}
 
 	@Override
-	public boolean removeCity(String zipCode) {
-		return cityMapper.removeCity(zipCode);
+	public CityInfoDTO removeCity(String zipCode) {
+		if (cityMapper.getCity(zipCode) == null) {
+			return null;
+		} else {
+			return new CityInfoDTO(cityMapper.removeCity(zipCode));
+		}
 	}
 
 	@Override
 	public CityInfoDTO editCity(CityInfoDTO city) {
-		return cityMapper.editCity(city);
+		if (cityMapper.getCity(city.getZipCode()) == null) {
+			return null;
+		} else {
+			return new CityInfoDTO(cityMapper.editCity(city));
+		}
 	}
 
 	@Override
 	public CityInfoDTO getCity(String zipCode) {
-		return cityMapper.getCity(zipCode);
+		if (cityMapper.getCity(zipCode) == null) {
+			return null;
+		} else {
+			return new CityInfoDTO(cityMapper.getCity(zipCode));
+		}
 	}
 
 }

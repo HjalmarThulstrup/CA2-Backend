@@ -33,103 +33,97 @@ import javax.ws.rs.core.Response;
  * @author Wicktus
  */
 @Path("Person")
-public class PersonResource
-{
+public class PersonResource {
 
-    Gson gson = new GsonBuilder().setPrettyPrinting().create();
-    PersonFacade personFacade = new PersonFacade("jpaputest");
+	Gson gson = new GsonBuilder().setPrettyPrinting().create();
+	PersonFacade personFacade = new PersonFacade("jpaputest");
 
-    @Context
-    private UriInfo context;
+	@Context
+	private UriInfo context;
 
-    /**
-     * Creates a new instance of PersonResource
-     */
-    public PersonResource()
-    {
-    }
+	/**
+	 * Creates a new instance of PersonResource
+	 */
+	public PersonResource() {
+	}
 
-    /**
-     * Retrieves representation of an instance of rest.PersonResource
-     *
-     * @param id
-     * @return an instance of java.lang.String
-     * @throws exceptions.PersonNotFoundException
-     */
-    @GET
-    @Path("/complete/{id}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getJsonById(@PathParam("id") int id) throws PersonNotFoundException
-    {
-        PersonDTO person = personFacade.getPersonById(id);
-        if (person == null) {
-            throw new PersonNotFoundException("No person with ID: " + id);
-        }
-        return Response.ok().entity(gson.toJson(person)).build();
-    }
+	/**
+	 * Retrieves representation of an instance of rest.PersonResource
+	 *
+	 * @param id
+	 * @return an instance of java.lang.String
+	 * @throws exceptions.PersonNotFoundException
+	 */
+	@GET
+	@Path("/complete/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getJsonById(@PathParam("id") int id) throws PersonNotFoundException {
+		PersonDTO person = personFacade.getPersonById(id);
+		if (person == null) {
+			throw new PersonNotFoundException("No person with ID: " + id);
+		}
+		return Response.ok().entity(gson.toJson(person)).build();
+	}
 
-    /**
-     * Retrieves representation of an instance of rest.PersonResource
-     *
-     * @return an instance of java.lang.String
-     * @throws exceptions.PersonNotFoundException
-     */
-    @GET
-    @Path("/complete")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getJson() throws PersonNotFoundException
-    {
-        return Response.ok()
-                .header("Access-Control-Allow-Origin", "*")
-                .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE")
-                .entity(gson.toJson(personFacade.getAllPeople())).build();
-    }
+	/**
+	 * Retrieves representation of an instance of rest.PersonResource
+	 *
+	 * @return an instance of java.lang.String
+	 * @throws exceptions.PersonNotFoundException
+	 */
+	@GET
+	@Path("/complete")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getJson() throws PersonNotFoundException {
+		return Response.ok()
+				.header("Access-Control-Allow-Origin", "*")
+				.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE")
+				.entity(gson.toJson(personFacade.getAllPeople())).build();
+	}
 
-    /**
-     * Retrieves representation of an instance of rest.PersonResource
-     *
-     * @return an instance of java.lang.String
-     * @throws exceptions.PersonNotFoundException
-     */
-    @GET
-    @Path("/contactinfo")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getContactInfoJson() throws PersonNotFoundException
-    {
-        List<PersonDTO> pList = personFacade.getAllPeople();
-        String contactJson = pList.stream()
-                .map(p -> "{\"email\":\""
-                + p.getEmail()
-                + "\", \"phoneNums\": "
-                + gson.toJson(p.getPhoneNums())
-                + "}")
-                .collect(Collectors.toList()).toString();
+	/**
+	 * Retrieves representation of an instance of rest.PersonResource
+	 *
+	 * @return an instance of java.lang.String
+	 * @throws exceptions.PersonNotFoundException
+	 */
+	@GET
+	@Path("/contactinfo")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getContactInfoJson() throws PersonNotFoundException {
+		List<PersonDTO> pList = personFacade.getAllPeople();
+		String contactJson = pList.stream()
+				.map(p -> "{\"email\":\""
+				+ p.getEmail()
+				+ "\", \"phoneNums\": "
+				+ gson.toJson(p.getPhoneNums())
+				+ "}")
+				.collect(Collectors.toList()).toString();
 
-        return Response.ok()
-                .header("Access-Control-Allow-Origin", "*")
-                .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE")
-                .entity(contactJson).build();
-    }
+		return Response.ok()
+				.header("Access-Control-Allow-Origin", "*")
+				.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE")
+				.entity(contactJson).build();
+	}
 
-    /**
-     * Retrieves representation of an instance of rest.PersonResource
-     *
-     * @param id
-     * @return an instance of java.lang.String
-     * @throws exceptions.PersonNotFoundException
-     */
-    @GET
-    @Path("/contactinfo/{id}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getContactInfoJsonById(@PathParam("id") int id) throws PersonNotFoundException
-    {
-        PersonDTO p = personFacade.getPersonById(id);
+	/**
+	 * Retrieves representation of an instance of rest.PersonResource
+	 *
+	 * @param id
+	 * @return an instance of java.lang.String
+	 * @throws exceptions.PersonNotFoundException
+	 */
+	@GET
+	@Path("/contactinfo/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getContactInfoJsonById(@PathParam("id") int id) throws PersonNotFoundException {
+		PersonDTO p = personFacade.getPersonById(id);
 
-        return Response.ok()
-                .header("Access-Control-Allow-Origin", "*")
-                .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE")
-                .entity("{\"email\":\"" + p.getEmail() + "\",\"phoneNums\": " + gson.toJson(p.getPhoneNums()) + "}").build();
-    }
+		return Response.ok()
+				.header("Access-Control-Allow-Origin", "*")
+				.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE")
+				.entity("{\"email\":\"" + p.getEmail() + "\",\"phoneNums\": " + gson.toJson(p.getPhoneNums()) + "}").build();
+	}
 
     /**
      * Retrieves representation of an instance of rest.PersonResource
@@ -199,11 +193,34 @@ public class PersonResource
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response postCityInfo(String content)
+    public Response postPerson(String content)
     {
         Person newPerson = gson.fromJson(content, Person.class);
         System.out.println("newPerson: " + newPerson);
         personFacade.createPerson(newPerson);
         return Response.ok().entity(gson.toJson(newPerson)).build();
     }
+//Udkommenteret fordi den gav mig fejl -Martin
+// Det fint. Den var ikke færdig -David
+//	/**
+//	 * PUT method for updating or creating an instance of PersonResource
+//	 *
+//	 * @param content representation for the resource
+//	 * @param id
+//	 */
+//	@PUT
+//	@Path("/{id}")
+//	@Consumes(MediaType.APPLICATION_JSON)
+//	@Produces(MediaType.APPLICATION_JSON)
+//	public Response putJson(String content, @PathParam("id") int id) throws PersonNotFoundException {
+//		PersonDTO newPerson = gson.fromJson(content, PersonDTO.class);
+//		PersonDTO savedPerson = personFacade.getPersonById(id);
+//		if (savedPerson == null) {
+//			throw new PersonNotFoundException("No person with id: " + id);
+//		}
+//
+//		PersonDTO editedPerson = personFacade.editPerson(newPerson);
+//		return Response.ok().entity(gson.toJson(editedPerson)).build();
+//
+//	}
 }

@@ -31,6 +31,7 @@ public class CityNotFoundExceptionMapper implements ExceptionMapper<CityNotFound
 		ExceptionDTO err = new ExceptionDTO(e, 404, isDebug);	
 
 		return Response.status(404)
+				.header("Access-Control-Allow-Origin", "*")
 				.entity(gson.toJson(err))
 				.type(MediaType.APPLICATION_JSON).
 				build();

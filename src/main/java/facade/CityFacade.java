@@ -36,17 +36,29 @@ public class CityFacade implements CityFacadeInterface {
 
 	@Override
 	public CityInfoDTO removeCity(String zipCode) {
-		return new CityInfoDTO(cityMapper.removeCity(zipCode));
+		if (cityMapper.getCity(zipCode) == null) {
+			return null;
+		} else {
+			return new CityInfoDTO(cityMapper.removeCity(zipCode));
+		}
 	}
 
 	@Override
-	public CityInfoDTO editCity(CityInfo city) {
-		return new CityInfoDTO(cityMapper.editCity(city));
+	public CityInfoDTO editCity(CityInfoDTO city) {
+		if (cityMapper.getCity(city.getZipCode()) == null) {
+			return null;
+		} else {
+			return new CityInfoDTO(cityMapper.editCity(city));
+		}
 	}
 
 	@Override
 	public CityInfoDTO getCity(String zipCode) {
-		return new CityInfoDTO(cityMapper.getCity(zipCode));
+		if (cityMapper.getCity(zipCode) == null) {
+			return null;
+		} else {
+			return new CityInfoDTO(cityMapper.getCity(zipCode));
+		}
 	}
 
 }

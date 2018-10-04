@@ -8,6 +8,7 @@ package facade;
 import DTO.HobbyDTO;
 import interfaces.HobbyFacadeInterface;
 import entity.Hobby;
+import exceptions.HobbyNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Persistence;
@@ -42,7 +43,7 @@ public class HobbyFacade implements HobbyFacadeInterface{
         return new HobbyDTO(hm.getHobby(id));
     }
     
-    public List<HobbyDTO> getHobby() {
+    public List<HobbyDTO> getHobby() throws HobbyNotFoundException {
         List<Hobby> hobbys = hm.getHobby();
         List<HobbyDTO> hdtos = new ArrayList<>();
         

@@ -110,7 +110,8 @@ public class HobbyMapper
             Query q = em.createNamedQuery("Hobby.getHobbyPopulation");
             q.setParameter("id", id);
 
-            return q.getFirstResult();
+            int num = q.getFirstResult();
+            return num;
 
         } catch (Exception e) {
             //Skal nok kastes en custom exception her

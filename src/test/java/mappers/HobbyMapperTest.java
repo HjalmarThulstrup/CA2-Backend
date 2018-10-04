@@ -68,11 +68,10 @@ public class HobbyMapperTest {
         final int actualNumberOfPeople = 3;
         //Hobby hobby = new Hobby("testPop", "TestPopDesc");
         Integer id = 2;
-        HobbyDTO h = new HobbyDTO(hm.getHobby(id));
-        System.out.println(h.getId());
-        assertNotNull(h);
+        int num = hm.getHobbyPopularity(id);
 
-        System.out.println(hm.getHobbyPopularity(id));
+        assertTrue(num == actualNumberOfPeople);
+
         
         
        //assertTrue(actualNumberOfPeople == result);

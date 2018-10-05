@@ -76,7 +76,7 @@ public class AddressResource {
         return Response.ok()
             .header("Access-Control-Allow-Origin", "*")
             .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE")
-            .entity(gson.toJson(af.getAddress(0))).build();
+            .entity(gson.toJson(result)).build();
     }
     
     @POST

@@ -83,11 +83,10 @@ public class AddressMapper
     public Address getAddress(int id)
     {
         EntityManager em = getEntityManager();
-        String qString = "SELECT NEW entity.Address(a) From Address AS a WHERE a.id = :id";
         Address addr = null;
         try {
             em.getTransaction().begin();
-            addr = em.createNamedQuery("Address.findById", Address.class).setParameter("id", id).getSingleResult();
+            addr = em.createNamedQuery("Address.findById", Address.class).setParameter("id", id).getResultList().get(0);
 
         } catch (Exception e) {
             System.out.println(e.getMessage());

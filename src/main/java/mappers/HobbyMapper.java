@@ -61,14 +61,17 @@ public class HobbyMapper
 
     public Hobby deleteHobby(int id)
     {
+        
         EntityManager em = getEntityManager();
-        Hobby h = null;
+        Hobby hobby = null;
         try {
-            h = em.find(Hobby.class, id);
             em.getTransaction().begin();
-            em.remove(h);
-            em.getTransaction().commit();
-
+            hobby = em.createNamedQuery("Hobby.findById", Hobby.class).setParameter("id", id).getSingleResult();
+            if(hobby != null) {
+                em.getTransaction().begin();
+                em.remove(hobby);
+                em.getTransaction().commit();
+            }
         } catch (Exception e) {
             //Skal nok kastes en custom exception her
             e.printStackTrace();
@@ -76,7 +79,7 @@ public class HobbyMapper
             em.close();
         }
 
-        return h;
+        return hobby;
     }
 
     public Hobby editHobby(Hobby hobby)

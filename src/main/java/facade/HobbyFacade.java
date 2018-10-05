@@ -25,7 +25,11 @@ public class HobbyFacade implements HobbyFacadeInterface{
 
     @Override
     public HobbyDTO deleteHobby(int id) {
-        return new HobbyDTO(hm.deleteHobby(id));
+        Hobby hobby = hm.deleteHobby(id);
+        if (hobby == null)
+            return null;
+        
+        return new HobbyDTO(hobby);
     }
 
     @Override

@@ -109,6 +109,8 @@ public class HobbyMapperTest {
         //assertNull(deletedHobby);
                 
         //Try to delete something that doesn't exist
-        HobbyDTO hobby = new HobbyDTO(hm.deleteHobby(2000));
+        Hobby hobby = hm.deleteHobby(2000);
+        
+        assertTrue(hobby.equals(null));
     }
 }

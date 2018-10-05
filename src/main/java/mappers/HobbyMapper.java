@@ -74,7 +74,7 @@ public class HobbyMapper
             }
         } catch (Exception e) {
             //Skal nok kastes en custom exception her
-            e.printStackTrace();
+            //e.printStackTrace();
         } finally {
             em.close();
         }

@@ -5,6 +5,7 @@
  */
 package entity;
 
+import DTO.AddressDTO;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
@@ -69,6 +70,13 @@ public class Address implements Serializable {
     public Address(Integer id, String street) {
         this.id = id;
         this.street = street;
+    }
+    
+    public Address(AddressDTO aDTO){
+        this.id = aDTO.getId();
+        this.street = aDTO.getStreet();
+        this.additionalInfo = aDTO.getAddInfo();
+        this.cityInfo = new CityInfo(aDTO.getZip(), aDTO.getCity());
     }
 
     public Integer getId() {

@@ -14,22 +14,22 @@ import entity.CityInfo;
  */
 public class AddressDTO{
     private int id;
-    private String streetAndInfo;
-    private String cityInfo;
+    private String city;
+    private String zip;
+    private String street;
+    private String addInfo;
     
 
     public AddressDTO(Address address) {
         this.id = address.getId();
-        this.streetAndInfo = address.getStreet() + ", " + address.getAdditionalInfo();
-        this.cityInfo = address.getCityInfo().getZipCode() + " " + address.getCityInfo().getCity();
+        this.street = address.getStreet();
+        this.addInfo = address.getAdditionalInfo();
+        this.zip = address.getCityInfo().getZipCode();
+        this.city = address.getCityInfo().getCity();;
     }
 
     public int getId() {
         return id;
-    }
-
-    public String getStreetAndInfo() {
-        return streetAndInfo;
     }
 
 
@@ -37,16 +37,38 @@ public class AddressDTO{
         this.id = id;
     }
 
-    public void setStreetAndInfo(String streetAndInfo) {
-        this.streetAndInfo = streetAndInfo;
+    public String getCity() {
+        return city;
     }
 
-    public String getCityInfo() {
-        return cityInfo;
+    public void setCity(String city) {
+        this.city = city;
     }
 
-    public void setCityInfo(String cityInfo) {
-        this.cityInfo = cityInfo;
+    public String getZip() {
+        return zip;
     }
+
+    public void setZip(String zip) {
+        this.zip = zip;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public String getAddInfo() {
+        return addInfo;
+    }
+
+    public void setAddInfo(String addInfo) {
+        this.addInfo = addInfo;
+    }
+    
+    
     
 }

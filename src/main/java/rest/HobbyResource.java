@@ -55,7 +55,7 @@ public class HobbyResource {
      */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getJson() {
+    public Response getJson() throws HobbyNotFoundException {
         return Response.ok()
             .header("Access-Control-Allow-Origin", "*")
             .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE")

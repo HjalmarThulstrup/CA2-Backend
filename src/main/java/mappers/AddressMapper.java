@@ -45,7 +45,7 @@ public class AddressMapper
         return addr;
     }
 
-    public boolean deleteAddress(int id)
+    public Address deleteAddress(int id)
     {
         EntityManager em = getEntityManager();
         try {
@@ -53,14 +53,14 @@ public class AddressMapper
             em.getTransaction().begin();
             em.remove(address);
             em.getTransaction().commit();
-            return true;
+            return address;
         } catch (Exception e) {
             System.out.println(e.getMessage());
         } finally {
             em.close();
         }
 
-        return false;
+        return null;
     }
 
     public Address editAddress(Address addr)

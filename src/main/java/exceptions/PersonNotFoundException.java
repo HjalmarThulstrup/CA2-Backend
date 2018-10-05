@@ -22,9 +22,4 @@ public class PersonNotFoundException extends Exception
         super(msg);
     }
 
-    public PersonNotFoundException(Exception e)
-    {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
 }

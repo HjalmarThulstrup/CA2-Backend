@@ -7,6 +7,7 @@ package entity;
 
 import DTO.HobbyDTO;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -52,7 +53,7 @@ public class Hobby implements Serializable {
     @JoinColumn(name = "hobbyId", referencedColumnName = "id")}, inverseJoinColumns = {
     @JoinColumn(name = "personId", referencedColumnName = "id")})
     @ManyToMany
-    private List<Person> personList;
+    private List<Person> personList = new ArrayList<>();
 
     public Hobby() {
     }

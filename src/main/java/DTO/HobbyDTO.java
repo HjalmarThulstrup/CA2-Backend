@@ -28,10 +28,14 @@ public class HobbyDTO {
         this.desc = hobby.getDescription();
         this.id = hobby.getId();
         personList = new ArrayList<>();
-        if(hobby.getPersonList() != null) {
-            hobby.getPersonList().forEach((p) -> {
+        if(hobby.getPersonList().size() > 0) {
+            for (Person p : hobby.getPersonList()) {
                 this.personList.add(p.getFirstName());
-            });
+            }
+            
+//            hobby.getPersonList().forEach((p) -> {
+//                this.personList.add(p.getFirstName());
+//            });
         }
         
         

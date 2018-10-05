@@ -105,13 +105,12 @@ public class HobbyMapper
     public int getHobbyPopularity(Integer id)
     {
         EntityManager em = getEntityManager();
-
+        int res = 0;
         try {
             Query q = em.createNamedQuery("Hobby.getHobbyPopulation");
             q.setParameter("id", id);
 
-            int num = q.getFirstResult();
-            return num;
+            res = ((Number)q.getSingleResult()).intValue();
 
         } catch (Exception e) {
             //Skal nok kastes en custom exception her
@@ -119,7 +118,7 @@ public class HobbyMapper
         } finally {
             em.close();
         }
-        return 0;
+        return res;
     }
 
     public Hobby getHobby(Integer id)
@@ -137,7 +136,7 @@ public class HobbyMapper
         return hobby;
     }
     
-    public List<Hobby> getHobby() throws HobbyNotFoundException {
+    public List<Hobby> getHobby() {
         EntityManager em = getEntityManager();
         List<Hobby> hobbys;
         try {

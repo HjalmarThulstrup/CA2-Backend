@@ -23,6 +23,8 @@ import com.google.gson.GsonBuilder;
 import entity.Hobby;
 import exceptions.HobbyNotFoundException;
 import exceptions.HobbyWrongFormatException;
+import java.util.HashMap;
+import java.util.Map;
 import javax.persistence.Persistence;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.POST;
@@ -141,5 +143,19 @@ public class HobbyResource {
                 .header("Access-Control-Allow-Origin", "*")
                 .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE")
                 .entity(gson.toJson(createdHobby)).build();
+    }
+    
+    @GET
+    @Path("/getHobbyPopulation/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getHobbyPopulation(@PathParam("id") int id) {
+        Map<String, Integer> result = new HashMap<>();
+        int hobbyAmount = hf.getHobbyPopularity(id);
+        result.put("amount", hobbyAmount);
+        
+        return Response.ok()
+                .header("Access-Control-Allow-Origin", "*")
+                .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE")
+                .entity(gson.toJson(result)).build();
     }
 }

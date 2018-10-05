@@ -39,7 +39,12 @@ public class HobbyFacade implements HobbyFacadeInterface{
 
     @Override
     public HobbyDTO getHobby(int id) {
-        return new HobbyDTO(hm.getHobby(id));
+        Hobby returnHobby = hm.getHobby(id);
+        if(returnHobby == null) {
+            return null;
+        }
+         
+        return new HobbyDTO(returnHobby);
     }
     
     public List<HobbyDTO> getHobby() {

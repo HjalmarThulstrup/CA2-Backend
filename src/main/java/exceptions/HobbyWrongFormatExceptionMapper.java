@@ -29,6 +29,7 @@ public class HobbyWrongFormatExceptionMapper implements ExceptionMapper<HobbyWro
 		ExceptionDTO err = new ExceptionDTO(e, 500, isDebug);	
 
 		return Response.status(500)
+				.header("Access-Control-Allow-Origin", "*")
 				.entity(gson.toJson(err))
 				.type(MediaType.APPLICATION_JSON).
 				build();

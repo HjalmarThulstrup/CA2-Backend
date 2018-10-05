@@ -34,7 +34,7 @@ import javax.ws.rs.POST;
  *
  * @author rlumh
  */
-@Path("Hobby")
+@Path("hobby")
 public class HobbyResource {
     
     @Context

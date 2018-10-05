@@ -32,7 +32,7 @@ import javax.ws.rs.core.Response;
  *
  * @author Wicktus
  */
-@Path("Person")
+@Path("person")
 public class PersonResource {
 
 	Gson gson = new GsonBuilder().setPrettyPrinting().create();

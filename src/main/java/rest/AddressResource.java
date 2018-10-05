@@ -36,7 +36,7 @@ import mappers.AddressMapper;
  *
  * @author juanni420
  */
-@Path("Address")
+@Path("address")
 public class AddressResource {
 
     @Context

@@ -28,7 +28,7 @@ public class PersonMapperTest
 
     public PersonMapperTest()
     {
-        mapper = new PersonMapper("jpaputest");
+        mapper = new PersonMapper("jpapu");
     }
 
     /**

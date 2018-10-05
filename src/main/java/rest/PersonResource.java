@@ -36,7 +36,7 @@ import javax.ws.rs.core.Response;
 public class PersonResource {
 
 	Gson gson = new GsonBuilder().setPrettyPrinting().create();
-	PersonFacade personFacade = new PersonFacade("jpaputest");
+	PersonFacade personFacade = new PersonFacade("jpapu");
 
 	@Context
 	private UriInfo context;

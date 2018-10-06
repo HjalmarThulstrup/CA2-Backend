@@ -62,7 +62,6 @@ public class HobbyMapperTest {
         
     }
 
-    //NEEED SOME WORK!!!!
     @Test
     public void testGetHobbyPopularity() {
         final int actualNumberOfPeople = 3;

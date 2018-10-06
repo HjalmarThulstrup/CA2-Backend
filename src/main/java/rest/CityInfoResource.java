@@ -91,13 +91,13 @@ public class CityInfoResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response updateCity(String content, @PathParam("zipCode") String zipCode) throws CityNotFoundException {
-		CityInfoDTO newCity = gson.fromJson(content, CityInfoDTO.class);
-		CityInfoDTO savedCity = cityFacade.getCity(zipCode);
-		if (savedCity == null) {
-			throw new CityNotFoundException("No city with zipcode: " + zipCode);
-		}
-		cityFacade.editCity(newCity);
-		return Response.ok().entity(gson.toJson(cityFacade.getCity(zipCode))).build();
+            CityInfoDTO newCity = gson.fromJson(content, CityInfoDTO.class);
+            CityInfoDTO savedCity = cityFacade.getCity(zipCode);
+            if (savedCity == null) {
+                    throw new CityNotFoundException("No city with zipcode: " + zipCode);
+            }
+            cityFacade.editCity(newCity);
+            return Response.ok().entity(gson.toJson(cityFacade.getCity(zipCode))).build();
 	}
 
 }

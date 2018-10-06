@@ -1,10 +1,127 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>CA2</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    </head>
-    <body>
-        <h1>CA2 Project</h1>
-    </body>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Documentation</title>
+
+</head>
+<body>
+    <div id="content">
+    <h3>Person endpoints</h3>
+    <table>
+        <tr><th>Get</th><th>Person</th></tr>
+        <tr><td>api/person/complete</td><td>return all the "person"s currently in the database, with all inforamtion</td></tr>
+        <tr><td>api/person/complet/id</td><td>Return a specific person with all information</td></tr>
+        <tr><td>api/person/contactinfo</td> <td>Returns all persons in the db's contact information</td> </tr>
+        <tr><td>api/person/contactinfo/id</td><td>Returns a specific persons contact information</td></tr>
+        <tr><td>api/person/city/zipcode</td><td>Returns all persons within that zipcode.</td></tr>
+        <tr><th>PUT</th><th>person</th></tr>
+        <tr><td>api/person/id</td> <td>Takes a person id and a person object and updates current person to equal the new/updated person</td></tr>
+        <tr><th>POST</th><th>person</th></tr>
+        <tr><td>api/person</td><td>Takes a person json object and add it to database if it is valid</td></tr>
+    </table>
+    <h3>Hobby endpoints</h3>
+    <table>
+        <tr><th>GET</th><th></th></tr>
+        <tr><td>api/hobby</td><td>Returns all the hobbbys in the databse</td></tr>
+        <tr><td>api/hobby/id</td><td>Returns a specific hobby from the databse with  the corresponding id.</td></tr>
+        <tr><td>api/hobby/gethobbyPopulation/id</td><td>Returns a amount of people a personList on hobby</td></tr>
+        <tr><th>PUT</th><th></th></tr>
+        <tr><td>api/hobby/id</td><td>Updates current hobby with the corresponding id, to the new hobby passed in.</td></tr>
+        <tr><th>DELETE</th><th></th></tr>
+        <tr><td>api/hobby/id</td><td>Deletes the hobby with the corresponding id, and returns the object if the method was succesfull</td></tr>
+        <tr><th>POST</th><th></th></tr>
+        <tr><td>api/hobby/createhobby</td><td>Create a new hobby given a JSON object (Using this request it should be possible to create a hobby with name and
+        Description)</td></tr>
+    </table>
+    <h3>Address endpoints</h3>
+    <table>
+        <tr><th>GET</th><th></th></tr>
+        <tr><td>api/Adress</td><td>Returns all the Addresses in the database as a json object/array</td></tr>
+        <tr><td>api/Address/id</td><td>Returns a specific date corresponding to the id, as a json object</td></tr>
+        <tr><th>POST</th><th></th></tr>
+        <tr><td>api/address/createaddress</td><td>Create a new address given a JSON object (Using this request it should be possible to create a Hobby with street, additional info additional
+        a cityinfo object)</td></tr>
+        <tr><th>DELETE</th><th></th></tr>
+        <tr><td>api/address/id</td><td>Deletes the address corresponding to the id, if it exist</td></tr>
+        <tr><th>PUT</th><td></td></tr>
+        <tr><td>api/address/id</td><td>Takes a json object and updates the corresponding address with the new values</td></tr>
+    </table>
+
+    <h3>cityinfo endpoints</h3>
+    <table>
+        <tr><th>GET</th><th></th></tr>
+        <tr><td>api/cityinfo/zipCodeList</td><td>Returns a json array of all citys and zipcodes in Denmark</td></tr>
+        <tr><td>api/cityinfo/{zipCode}</td><td>Returns a json object with zipcode and corresponding city</td></tr>
+        <tr><th>POST</th><th></th></tr>
+        <tr><td>api/cityinfo</td><td>Takes a cityinfo object and adds it to the database</td></tr>
+        <tr><th>DELETE</th><th></th></tr>
+        <tr><td>api/cityinfo/{zipCode}</td><td>Deletes the cityinfo object corresponding to the id/zipcode, if it exist</td></tr>
+        <tr><th>PUT</th><th></th></tr>
+        <tr><td>api/cityinfo/{zipCode}</td>Takes a json object and updates the corresponding cityinfo object with the new values<td></td></tr>
+    </table>
+
+    <h1>Json examples</h1>
+    <h4>person</h4>
+    <p>Complete person json example:</p>
+    <img src="documentation/PersonJson.PNG" alt="Should be image of some json">
+
+    <br>
+    <p>contactInfo json example:</p>
+    <img src="documentation/contactInfo.PNG" alt="Should be image of some json">
+
+    <br>
+
+    <h4>Hobby</h4>
+    <p>List of all hobbies json example:</p>
+    <img src="documentation/allHobbyJson.PNG" alt="Should be image of some json">
+    
+    <br>
+
+    <p>Single hobby json example:</p>
+    <img src="documentation/hobbyJson.PNG" alt="Should be image of some json">
+    <br>
+
+    <h4>Address</h4>
+    <p>Single address json example:</p>
+    <img src="documentation/addressJson.PNG" alt="Should be image of some json">
+    
+    <br>
+
+    <h4>cityinfo</h4>
+    <p>Single cityinfo json example:</p>
+    <img src="documentation/cityInfoJson.PNG" alt="Should be image of some json">
+    </div>
+</body>
 </html>
+
+<style>
+    #content {
+        font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 70%;
+        margin: 0 auto;
+    }
+    table {
+        width: 100%;
+        
+    }
+
+    
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    tr:hover {
+        background-color: #ddd;
+    }
+
+    th {
+        padding-top: 5px;
+        padding-bottom: 5px;
+        text-align: left;
+        background-color: rgb(55, 107, 122);
+        color: white;
+    }
+</style>

@@ -12,11 +12,13 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
+import javax.ws.rs.ext.Provider;
 
 /**
  *
  * @author juanni420
  */
+@Provider
 public class AddressWrongFormatExceptionMapper implements ExceptionMapper<AddressWrongFormatException>{
 
     @Context
@@ -26,7 +28,7 @@ public class AddressWrongFormatExceptionMapper implements ExceptionMapper<Addres
     @Override
     public Response toResponse(AddressWrongFormatException e) {
         boolean isDebug = context.getInitParameter("debug").equals("true");
-		ExceptionDTO err = new ExceptionDTO(e, 500, isDebug);	
+		ExceptionDTO err = new ExceptionDTO(e, 500, isDebug);
 
 		return Response.status(500)
 				.header("Access-Control-Allow-Origin", "*")

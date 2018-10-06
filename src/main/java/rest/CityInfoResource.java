@@ -31,7 +31,7 @@ import mappers.CityMapper;
  *
  * @author martin
  */
-@Path("CityInfo")
+@Path("cityinfo")
 public class CityInfoResource {
 
 	Gson gson = new GsonBuilder().setPrettyPrinting().create();

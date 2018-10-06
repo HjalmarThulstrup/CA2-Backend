@@ -62,6 +62,7 @@ public class HobbyMapperTest {
         
     }
 
+
     @Test
     public void testGetHobbyPopularity() {
         final int actualNumberOfPeople = 3;
@@ -76,6 +77,23 @@ public class HobbyMapperTest {
        //assertTrue(actualNumberOfPeople == result);
         
     }
+
+//    //NEEED SOME WORK!!!!
+//    @Test
+//    public void testGetHobbyPopularity() {
+//        final int actualNumberOfPeople = 3;
+//        //Hobby hobby = new Hobby("testPop", "TestPopDesc");
+//        Integer id = 2;
+//        int num = hm.getHobbyPopularity(id);
+//
+//        assertTrue(num == actualNumberOfPeople);
+//
+//        
+//        
+//       //assertTrue(actualNumberOfPeople == result);
+//        
+//    }
+
 
     @Test
     public void testGetHobby() {

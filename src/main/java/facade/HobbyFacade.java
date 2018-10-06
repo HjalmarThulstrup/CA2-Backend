@@ -16,7 +16,7 @@ import mappers.HobbyMapper;
 
 
 public class HobbyFacade implements HobbyFacadeInterface{
-    HobbyMapper hm = new HobbyMapper(Persistence.createEntityManagerFactory("jpaputest"));
+    HobbyMapper hm = new HobbyMapper(Persistence.createEntityManagerFactory("jpapu"));
     
     @Override
     public HobbyDTO addHobby(Hobby hobby) {

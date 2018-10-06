@@ -36,7 +36,7 @@ import mappers.AddressMapper;
  *
  * @author juanni420
  */
-@Path("Address")
+@Path("address")
 public class AddressResource {
 
     @Context
@@ -54,58 +54,64 @@ public class AddressResource {
 
     /**
      * Retrieves representation of an instance of rest.AddressResource
+     *
      * @return an instance of Response
      */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getJson() {
         return Response.ok()
-            .header("Access-Control-Allow-Origin", "*")
-            .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE")
-            .entity(gson.toJson(af.getAddress(0))).build();
+                .header("Access-Control-Allow-Origin", "*")
+                .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE")
+                .entity(gson.toJson(af.getAddress(0))).build();
     }
-    
+
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAddress(@PathParam("id") int id) throws AddressNotFoundException  {
-        AddressDTO result = af.getAddress(id);
-        if (result == null) {
+    public Response getAddress(@PathParam("id") int id) throws AddressNotFoundException {
+        AddressDTO result = null;
+        try {
+            result = af.getAddress(id);
+        } catch (Exception e) {
             throw new AddressNotFoundException("No address with id " + id);
         }
         return Response.ok()
-            .header("Access-Control-Allow-Origin", "*")
-            .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE")
-            .entity(gson.toJson(af.getAddress(0))).build();
+                .header("Access-Control-Allow-Origin", "*")
+                .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE")
+                .entity(gson.toJson(result)).build();
     }
-    
+
     @POST
     @Path("/createAddress")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response createAddress(String content) throws AddressWrongFormatException  {
+    public Response createAddress(String content) throws AddressWrongFormatException {
         Address a = gson.fromJson(content, Address.class);
-        AddressDTO createdAddress = af.createAddress(a);
-        
-        if (createdAddress.equals(null)) {
+        AddressDTO createdAddress = null;
+        try {
+            createdAddress = af.createAddress(a);
+        } catch (Exception e) {
             throw new AddressWrongFormatException("Address could not be created, check address info...");
         }
-        
+
         return Response.ok()
                 .header("Access-Control-Allow-Origin", "*")
                 .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE")
                 .entity(gson.toJson(createdAddress)).build();
     }
-    
+
     @DELETE
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response deleteAddress(@PathParam("id") int id) throws AddressNotFoundException {
-        AddressDTO deletedAddress = af.deleteAddress(id);
-        if (deletedAddress == null) {
+        AddressDTO deletedAddress = null;
+        try {
+            deletedAddress = af.deleteAddress(id);
+        } catch (Exception e) {
             throw new AddressNotFoundException("Couldn't find an address with the id of: " + id);
         }
-        
+
         return Response.ok()
                 .header("Access-Control-Allow-Origin", "*")
                 .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE")
@@ -118,15 +124,17 @@ public class AddressResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response putAddress(String content, @PathParam("id") int id) throws AddressNotFoundException {
         Address newAddress = gson.fromJson(content, Address.class);
-        Address savedAddress = new Address(af.getAddress(id));
-        
-        if(savedAddress == null){
-            throw new AddressNotFoundException("No address with id: "+ id);
+        Address savedAddress = null;
+        try {
+            savedAddress = new Address(af.getAddress(id));
+        } catch (Exception e) {
+            throw new AddressNotFoundException("No address with id: " + id);
         }
-        if (newAddress.getStreet()!= null) {
+
+        if (newAddress.getStreet() != null) {
             savedAddress.setStreet(newAddress.getStreet());
         }
-        if (newAddress.getAdditionalInfo()!= null) {
+        if (newAddress.getAdditionalInfo() != null) {
             savedAddress.setAdditionalInfo(newAddress.getAdditionalInfo());
         }
         if (newAddress.getCityInfo() != null) {

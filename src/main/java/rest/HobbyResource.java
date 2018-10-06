@@ -25,7 +25,6 @@ import exceptions.HobbyNotFoundException;
 import exceptions.HobbyWrongFormatException;
 import java.util.HashMap;
 import java.util.Map;
-import javax.persistence.Persistence;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.POST;
 

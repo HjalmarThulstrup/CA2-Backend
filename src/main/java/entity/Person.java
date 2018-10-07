@@ -65,7 +65,7 @@ public class Person implements Serializable
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "person")
     private List<Phone> phoneList;
     @JoinColumn(name = "fkAddressId", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, cascade = CascadeType.PERSIST)
     private Address address;
 
     public Person()

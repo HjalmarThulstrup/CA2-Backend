@@ -80,8 +80,6 @@ public class PersonResource
     public Response getJson() throws PersonNotFoundException
     {
         return Response.ok()
-                .header("Access-Control-Allow-Origin", "*")
-                .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE")
                 .entity(gson.toJson(personFacade.getAllPeople())).build();
     }
 
@@ -106,8 +104,6 @@ public class PersonResource
                 .collect(Collectors.toList()).toString();
 
         return Response.ok()
-                .header("Access-Control-Allow-Origin", "*")
-                .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE")
                 .entity(contactJson).build();
     }
 
@@ -126,8 +122,6 @@ public class PersonResource
         PersonDTO p = personFacade.getPersonById(id);
 
         return Response.ok()
-                .header("Access-Control-Allow-Origin", "*")
-                .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE")
                 .entity("{\"email\":\"" + p.getEmail() + "\",\"phoneNums\": " + gson.toJson(p.getPhoneNums()) + "}").build();
     }
 
@@ -147,8 +141,6 @@ public class PersonResource
         List<PersonDTO> p = personFacade.getPeopleByHobby(new Hobby(hobbyId));
 
         return Response.ok()
-                .header("Access-Control-Allow-Origin", "*")
-                .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE")
                 .entity(gson.toJson(p)).build();
     }
 
@@ -167,8 +159,6 @@ public class PersonResource
         List<PersonDTO> p = personFacade.getPeopleByCity(new CityInfo(zipCode));
 
         return Response.ok()
-                .header("Access-Control-Allow-Origin", "*")
-                .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE")
                 .entity(gson.toJson(p)).build();
     }
 
@@ -205,8 +195,6 @@ public class PersonResource
         System.out.println("newPerson: " + newPerson);
         personFacade.createPerson(newPerson);
         return Response.ok()
-                .header("Access-Control-Allow-Origin", "*")
-                .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE")
                 .entity(gson.toJson(newPerson)).build();
     }
 //Udkommenteret fordi den gav mig fejl -Martin

@@ -56,8 +56,6 @@ public class HobbyResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getJson() throws HobbyNotFoundException {
         return Response.ok()
-            .header("Access-Control-Allow-Origin", "*")
-            .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE")
             .entity(gson.toJson(hf.getHobby())).build();
     }
 
@@ -76,8 +74,6 @@ public class HobbyResource {
             throw new HobbyNotFoundException("No Hobby with id: " + id);
         }
         return Response.ok()
-                .header("Access-Control-Allow-Origin", "*")
-                .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE")
                 .entity(gson.toJson(result)).build();
     }       
     
@@ -106,8 +102,6 @@ public class HobbyResource {
         }
         HobbyDTO result = hf.editHobby(savedHobby);
         return Response.ok()
-                .header("Access-Control-Allow-Origin", "*")
-                .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE")
                 .entity(gson.toJson(result)).build();
     }
     
@@ -121,8 +115,6 @@ public class HobbyResource {
         }
         
         return Response.ok()
-                .header("Access-Control-Allow-Origin", "*")
-                .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE")
                 .entity(gson.toJson(h)).build();
     }
     
@@ -139,8 +131,6 @@ public class HobbyResource {
         }
         
         return Response.ok()
-                .header("Access-Control-Allow-Origin", "*")
-                .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE")
                 .entity(gson.toJson(createdHobby)).build();
     }
     
@@ -153,8 +143,6 @@ public class HobbyResource {
         result.put("amount", hobbyAmount);
         
         return Response.ok()
-                .header("Access-Control-Allow-Origin", "*")
-                .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE")
                 .entity(gson.toJson(result)).build();
     }
 }

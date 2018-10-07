@@ -61,8 +61,6 @@ public class AddressResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getJson() {
         return Response.ok()
-                .header("Access-Control-Allow-Origin", "*")
-                .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE")
                 .entity(gson.toJson(af.getAddress(0))).build();
     }
 
@@ -77,8 +75,6 @@ public class AddressResource {
             throw new AddressNotFoundException("No address with id " + id);
         }
         return Response.ok()
-                .header("Access-Control-Allow-Origin", "*")
-                .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE")
                 .entity(gson.toJson(result)).build();
     }
 
@@ -96,8 +92,6 @@ public class AddressResource {
         }
 
         return Response.ok()
-                .header("Access-Control-Allow-Origin", "*")
-                .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE")
                 .entity(gson.toJson(createdAddress)).build();
     }
 
@@ -113,8 +107,6 @@ public class AddressResource {
         }
 
         return Response.ok()
-                .header("Access-Control-Allow-Origin", "*")
-                .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE")
                 .entity(gson.toJson(deletedAddress)).build();
     }
 
@@ -145,8 +137,6 @@ public class AddressResource {
         }
         AddressDTO result = af.editAddress(savedAddress);
         return Response.ok()
-                .header("Access-Control-Allow-Origin", "*")
-                .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE")
                 .entity(gson.toJson(result)).build();
     }
 }

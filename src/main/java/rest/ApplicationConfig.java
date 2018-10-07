@@ -29,13 +29,16 @@ public class ApplicationConfig extends Application {
 	 * If required, comment out calling this method in getClasses().
 	 */
 	private void addRestResourceClasses(Set<Class<?>> resources) {
+            resources.add(corsFilters.CorsRequestFilter.class);
+            resources.add(corsFilters.CorsResponseFilter.class);
             resources.add(exceptions.AddressNotFoundExceptionMapper.class);
-            resources.add(exceptions.CityNotFoundExceptionMapper.class);
-            resources.add(exceptions.HobbyNotFoundExceptionMapper.class);
-            resources.add(rest.AddressResource.class);
-        resources.add(rest.CityInfoResource.class);
-        resources.add(rest.HobbyResource.class);
-        resources.add(rest.PersonResource.class);
+            resources.add(exceptions.AddressWrongFormatExceptionMapper.class);
+        resources.add(exceptions.CityNotFoundExceptionMapper.class);
+        resources.add(exceptions.HobbyNotFoundExceptionMapper.class);
+        resources.add(rest.AddressResource.class);
+		resources.add(rest.CityInfoResource.class);
+		resources.add(rest.HobbyResource.class);
+		resources.add(rest.PersonResource.class);
 	}
 	
 }

@@ -47,8 +47,6 @@ public class CityInfoResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getCities() {
 		return Response.ok()
-				.header("Access-Control-Allow-Origin", "*")
-				.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE")
 				.entity(gson.toJson(cityFacade.getZipCodeList())).build();
 	}
 
@@ -61,8 +59,6 @@ public class CityInfoResource {
 			throw new CityNotFoundException("No city with zipcode: " + zipCode);
 		}
 		return Response.ok()
-				.header("Access-Control-Allow-Origin", "*")
-				.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE")
 				.entity(gson.toJson(cityInfoDTO)).build();
 	}
 

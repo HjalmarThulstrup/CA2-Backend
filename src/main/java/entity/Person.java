@@ -60,9 +60,9 @@ public class Person implements Serializable
     @Size(max = 45)
     @Column(name = "lastName")
     private String lastName;
-    @ManyToMany(mappedBy = "personList")
+    @ManyToMany(mappedBy = "personList", cascade = CascadeType.PERSIST)
     private List<Hobby> hobbyList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "person")
+    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "person")
     private List<Phone> phoneList;
     @JoinColumn(name = "fkAddressId", referencedColumnName = "id")
     @ManyToOne(optional = false, cascade = CascadeType.PERSIST)

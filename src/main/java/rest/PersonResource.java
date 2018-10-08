@@ -139,6 +139,9 @@ public class PersonResource
     public Response getPeopleJsonByHobby(@PathParam("hobbyId") int hobbyId) throws PersonNotFoundException
     {
         List<PersonDTO> p = personFacade.getPeopleByHobby(new Hobby(hobbyId));
+		if(p == null){
+			throw new PersonNotFoundException("Der findes ikke nogen personer med denne hobby");
+		}
 
         return Response.ok()
                 .entity(gson.toJson(p)).build();
@@ -157,6 +160,9 @@ public class PersonResource
     public Response getPeopleJsonByCity(@PathParam("zipCode") String zipCode) throws PersonNotFoundException
     {
         List<PersonDTO> p = personFacade.getPeopleByCity(new CityInfo(zipCode));
+		if(p == null){
+			throw new PersonNotFoundException("Der findes ikke nogen personer med denne by");
+		}
 
         return Response.ok()
                 .entity(gson.toJson(p)).build();
